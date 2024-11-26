@@ -1,50 +1,39 @@
 import './App.css';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Serach from './components/Search/Serach';
 import Pokemon from './components/Pokemon/Pokemon';
 
-interface SerachState {
-    inputData: object;
-    error: boolean;
-}
+export default function App() {
+    const [inputData, setInputData] = useState({});
+    const [isError, setError] = useState(false);
 
-class App extends Component {
-    state: SerachState = {
-        inputData: {},
-        error: false,
+    const handleData = (inputData: object) => {
+        setInputData(inputData);
     };
 
-    handleData = (inputData: object) => {
-        this.setState({ inputData });
-    };
-
-    render() {
-        if (this.state.error) {
-            throw new Error('I crashed!');
-        }
-
-        return (
-            <>
-                <div className="page">
-                    <div className="top">
-                        <Serach onInputData={this.handleData} />
-                    </div>
-
-                    <div className="bottom">
-                        <Pokemon onInputData={this.state.inputData} />
-                    </div>
-                </div>
-                <button
-                    className="button button--error"
-                    onClick={() => {
-                        this.setState({ error: true });
-                    }}
-                >
-                    throw an error
-                </button>
-            </>
-        );
+    if (isError) {
+        throw new Error('I crashed!');
     }
-}
 
-export default App;
+    return (
+        <>
+            <div className="page">
+                <div className="top">
+                    <Serach onInputData={handleData} />
+                </div>
+
+                <div className="bottom">
+                    <Pokemon onInputData={inputData} />
+                </div>
+            </div>
+            <button
+                className="button button--error"
+                onClick={() => {
+                    setError(true);
+                }}
+            >
+                throw an error
+            </button>
+        </>
+    );
+}

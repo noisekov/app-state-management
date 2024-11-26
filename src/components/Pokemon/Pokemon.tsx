@@ -8,21 +8,15 @@ interface requestDataI {
     sprites: string;
 }
 
-interface SerachState {
-    inputData: requestDataI;
-}
-
 interface SerachProps {
     onInputData: requestDataI | object;
 }
 
 export default class Pokemon extends Component<SerachProps> {
-    state: SerachState = {
-        inputData: {
-            name: [],
-            abilities: [],
-            sprites: '',
-        },
+    state: requestDataI = {
+        name: [],
+        abilities: [],
+        sprites: '',
     };
 
     constructor(props: SerachProps) {
@@ -31,12 +25,12 @@ export default class Pokemon extends Component<SerachProps> {
 
     componentDidUpdate(prevProps: SerachProps) {
         if (!equal(this.props.onInputData, prevProps.onInputData)) {
-            this.setState({ inputData: this.props.onInputData });
+            this.setState(this.props.onInputData);
         }
     }
 
     render() {
-        const { sprites, name, abilities } = this.state.inputData;
+        const { sprites, name, abilities } = this.state;
 
         return (
             <div className="pokemon-card">
