@@ -3,11 +3,20 @@ import React, { useState } from 'react';
 import Serach from './components/Search/Serach';
 import Pokemon from './components/Pokemon/Pokemon';
 
+interface requestDataI {
+    name: string[];
+    abilities: string[];
+    sprites: string;
+}
 export default function App() {
-    const [inputData, setInputData] = useState({});
+    const [inputData, setInputData] = useState<requestDataI>({
+        name: [],
+        abilities: [],
+        sprites: '',
+    });
     const [isError, setError] = useState(false);
 
-    const handleData = (inputData: object) => {
+    const handleData = (inputData: requestDataI) => {
         setInputData(inputData);
     };
 
