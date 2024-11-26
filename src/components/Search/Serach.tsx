@@ -1,44 +1,27 @@
 import Loader from '../Loader/Loader';
 import './Search.css';
-import React, { Component, SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useEffect, useState } from 'react';
 
 interface requestDataI {
     name: string[];
     abilities: string[];
     sprites: string;
 }
-interface SerachState {
-    isLoading: boolean;
-    requestData: object;
-}
 
 interface SerachProps {
     onInputData: (data: requestDataI) => void;
 }
 
-export default class Serach extends Component<SerachProps> {
-    state: SerachState = {
-        isLoading: false,
-        requestData: {},
-    };
+export default function Serach(props: SerachProps) {
+    const [isLoading, setIsLoading] = useState(false);
 
-    constructor(props: SerachProps) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            requestData: {},
-        };
-    }
-
-    componentDidMount() {
+    useEffect(() => {
         const storedData: string | null = localStorage.getItem('data');
+        request(storedData ? storedData : '');
+    }, []);
 
-        this.request(storedData ? storedData : '');
-    }
-
-    async request(value: string) {
-        this.setState({ isLoading: true });
-
+    const request = async (value: string) => {
+        setIsLoading(true);
         const resultObj: requestDataI = {
             name: [],
             abilities: [],
@@ -53,8 +36,8 @@ export default class Serach extends Component<SerachProps> {
         const { status } = await request;
 
         if (status !== 200) {
-            this.setState({ isLoading: false, requestData: resultObj });
-            this.props.onInputData(resultObj);
+            setIsLoading(false);
+            props.onInputData(resultObj);
         }
 
         const data = await request.json();
@@ -71,30 +54,30 @@ export default class Serach extends Component<SerachProps> {
             });
         }
 
-        this.setState({ isLoading: false, requestData: resultObj });
-        this.props.onInputData(resultObj);
-    }
+        setIsLoading(false);
+        props.onInputData(resultObj);
+    };
 
-    async handleSubmit(event: SyntheticEvent<HTMLFormElement, SubmitEvent>) {
+    const handleSubmit = async (
+        event: SyntheticEvent<HTMLFormElement, SubmitEvent>
+    ) => {
         event.preventDefault();
         const inputValue = (
             (event.target as HTMLFormElement)?.elements[0] as HTMLInputElement
         ).value.trim();
 
         localStorage.setItem('data', inputValue);
-        this.request(inputValue);
-    }
+        request(inputValue);
+    };
 
-    render() {
-        return this.state.isLoading ? (
-            <Loader />
-        ) : (
-            <form onSubmit={this.handleSubmit.bind(this)}>
-                <input type="search" className="input-search" />
-                <button className="button" type="submit">
-                    Search
-                </button>
-            </form>
-        );
-    }
+    return isLoading ? (
+        <Loader />
+    ) : (
+        <form onSubmit={handleSubmit}>
+            <input type="search" className="input-search" />
+            <button className="button" type="submit">
+                Search
+            </button>
+        </form>
+    );
 }
