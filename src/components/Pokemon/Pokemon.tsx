@@ -44,7 +44,7 @@ export default class Pokemon extends Component<SerachProps> {
                     {name.length
                         ? name.length === 1
                             ? 'Pokemon'
-                            : 'Examples of Pokemon'
+                            : 'Example of Pokemons'
                         : 'Incorrect input value'}
                 </h1>
                 {name.length === 1 && sprites && (
