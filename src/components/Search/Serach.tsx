@@ -14,11 +14,17 @@ interface SerachProps {
 
 export default function Serach(props: SerachProps) {
     const [isLoading, setIsLoading] = useState(false);
+    const [querySearch, setQuerySearch] = useState('');
 
     useEffect(() => {
-        const storedData: string | null = localStorage.getItem('data');
-        request(storedData ? storedData : '');
+        const storedData: string | null = localStorage.getItem('data') || '';
+        setQuerySearch(storedData);
+        request(storedData);
     }, []);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setQuerySearch(event.target.value);
+    };
 
     const request = async (value: string) => {
         setIsLoading(true);
@@ -74,7 +80,12 @@ export default function Serach(props: SerachProps) {
         <Loader />
     ) : (
         <form onSubmit={handleSubmit}>
-            <input type="search" className="input-search" />
+            <input
+                value={querySearch}
+                onChange={handleChange}
+                type="search"
+                className="input-search"
+            />
             <button className="button" type="submit">
                 Search
             </button>
