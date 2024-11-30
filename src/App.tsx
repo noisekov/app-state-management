@@ -4,19 +4,21 @@ import Serach from './components/Search/Serach';
 import Pokemon from './components/Pokemon/Pokemon';
 
 interface requestDataI {
-    name: string[];
+    name: string;
     abilities: string[];
     sprites: string;
 }
 export default function App() {
-    const [inputData, setInputData] = useState<requestDataI>({
-        name: [],
-        abilities: [],
-        sprites: '',
-    });
+    const [inputData, setInputData] = useState<requestDataI[]>([
+        {
+            name: '',
+            abilities: [],
+            sprites: '',
+        },
+    ]);
     const [isError, setError] = useState(false);
 
-    const handleData = (inputData: requestDataI) => {
+    const handleData = (inputData: requestDataI[]) => {
         setInputData(inputData);
     };
 

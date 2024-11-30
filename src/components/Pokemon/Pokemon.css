@@ -14,3 +14,9 @@
     height: 150px;
     margin: 0 auto;
 }
+
+.pokemon-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
