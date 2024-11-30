@@ -1,3 +1,4 @@
+import Pagination from '../Pagination/Pagination';
 import './Pokemon.css';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -30,33 +31,47 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             setInputData(onInputData);
         }
     }, [onInputData]);
-    const { sprites, name, abilities } = inputData;
+    const { sprites, name, abilities, url } = inputData;
+
+    const handleNewTemplate = (data: requestDataI) => {
+        setInputData(data);
+    };
 
     return (
-        <div className="pokemon-cards">
-            <div className="pokemon-card">
-                <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
-                {name && sprites && (
-                    <div className="pokemon-card__image">
-                        <img
-                            src={sprites}
-                            alt={name}
-                            width={150}
-                            height={150}
-                        />
-                    </div>
-                )}
-                {!!name && (
-                    <p className="pokemon-card__text">
-                        {name ? `name: ${name}` : ''}
-                    </p>
-                )}
-                {!!abilities.length && (
-                    <p className="pokemon-card__text">
-                        abilities: {abilities.join(', ')}
-                    </p>
-                )}
+        <div className="pokemon">
+            <div className="pokemon-cards">
+                <div className="pokemon-card">
+                    <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
+                    {name && sprites && (
+                        <div className="pokemon-card__image">
+                            <img
+                                src={sprites}
+                                alt={name}
+                                width={150}
+                                height={150}
+                            />
+                        </div>
+                    )}
+                    {!!name && (
+                        <p className="pokemon-card__text">
+                            {name ? `name: ${name}` : ''}
+                        </p>
+                    )}
+                    {!!abilities.length && (
+                        <p className="pokemon-card__text">
+                            abilities: {abilities.join(', ')}
+                        </p>
+                    )}
+                </div>
             </div>
+            {!!url.length && (
+                <div className="pokemon-pagination">
+                    <Pagination
+                        paginationData={inputData}
+                        newTemplate={handleNewTemplate}
+                    />
+                </div>
+            )}
         </div>
     );
 }

@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ErrorBoundary>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/class-component/" element={<App />} />
+                    <Route path="/class-component//*" element={<App />} />
                 </Routes>
             </BrowserRouter>
         </ErrorBoundary>

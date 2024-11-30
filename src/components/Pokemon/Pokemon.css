@@ -14,3 +14,13 @@
     height: 150px;
     margin: 0 auto;
 }
+
+.pokemon {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.pokemon-pagination {
+    margin: 0 auto;
+}
