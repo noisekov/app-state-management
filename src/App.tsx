@@ -7,18 +7,22 @@ interface requestDataI {
     name: string;
     abilities: string[];
     sprites: string;
+    next: string;
+    previous: string;
+    url: string[];
 }
 export default function App() {
-    const [inputData, setInputData] = useState<requestDataI[]>([
-        {
-            name: '',
-            abilities: [],
-            sprites: '',
-        },
-    ]);
+    const [inputData, setInputData] = useState<requestDataI>({
+        name: '',
+        abilities: [],
+        sprites: '',
+        next: '',
+        previous: '',
+        url: [],
+    });
     const [isError, setError] = useState(false);
 
-    const handleData = (inputData: requestDataI[]) => {
+    const handleData = (inputData: requestDataI) => {
         setInputData(inputData);
     };
 

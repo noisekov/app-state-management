@@ -14,15 +14,3 @@
     height: 150px;
     margin: 0 auto;
 }
-
-.pokemon-cards {
-    display: flex;
-    flex-direction: row;
-    gap: 30px;
-}
-
-.pokemon-cards__wrapper {
-    width: 330px;
-    overflow: hidden;
-    padding: 30px;
-}

@@ -6,6 +6,9 @@ interface requestDataI {
     name: string;
     abilities: string[];
     sprites: string;
+    next: string;
+    previous: string;
+    url: string[];
 }
 
 interface PokemonData {
@@ -15,7 +18,7 @@ interface PokemonData {
 }
 
 interface SerachProps {
-    onInputData: (data: requestDataI[]) => void;
+    onInputData: (data: requestDataI) => void;
 }
 
 export default function Serach(props: SerachProps) {
@@ -33,11 +36,13 @@ export default function Serach(props: SerachProps) {
     };
 
     const request = async (value: string) => {
-        const arrayResultObj: requestDataI[] = [];
         const resultObj: requestDataI = {
             name: '',
             abilities: [],
             sprites: '',
+            next: '',
+            previous: '',
+            url: [],
         };
         setIsLoading(true);
         const request = await fetch(
@@ -47,8 +52,7 @@ export default function Serach(props: SerachProps) {
 
         if (status !== 200) {
             setIsLoading(false);
-            arrayResultObj.push(resultObj);
-            props.onInputData(arrayResultObj);
+            props.onInputData(resultObj);
         }
 
         const data = await request.json();
@@ -56,38 +60,35 @@ export default function Serach(props: SerachProps) {
         if (value) {
             parseObj(data);
         } else {
-            for (const prop in data.results) {
-                const requestPokemonInList = await fetch(
-                    data.results[prop].url
-                );
-                const { status: statusRequest } = await requestPokemonInList;
+            resultObj.url = data.results.map(
+                (result: { url: string }) => result.url
+            );
+            resultObj.previous = data.previous;
+            resultObj.next = data.next;
 
-                if (statusRequest !== 200) {
-                    arrayResultObj.push(resultObj);
-                }
+            const requestOnePokemonInList = await fetch(data.results[0].url);
+            const { status: statusOnePokemonOnList } =
+                await requestOnePokemonInList;
 
-                const dataPokemonInList = await requestPokemonInList.json();
-                parseObj(dataPokemonInList);
+            if (statusOnePokemonOnList !== 200) {
+                props.onInputData(resultObj);
             }
+
+            const dataOnePokemonInList = await requestOnePokemonInList.json();
+
+            parseObj(dataOnePokemonInList);
         }
 
         function parseObj(data: PokemonData) {
-            const resultObj: requestDataI = {
-                name: '',
-                abilities: [],
-                sprites: '',
-            };
-
             resultObj.name = data.name;
             resultObj.sprites = data.sprites.front_default;
             data.abilities.forEach((ability: { ability: { name: string } }) => {
                 resultObj.abilities.push(ability.ability.name);
             });
-            arrayResultObj.push(resultObj);
         }
 
         setIsLoading(false);
-        props.onInputData(arrayResultObj);
+        props.onInputData(resultObj);
     };
 
     const handleSubmit = async (
