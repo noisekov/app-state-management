@@ -33,6 +33,7 @@ export default function Pagination({
     newTemplate,
 }: PaginationProps) {
     const [page, setPage] = useState(1);
+    const [maxPage, setMaxPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
     const navogate = useNavigate();
     const resultObj: requestDataI = {
@@ -48,7 +49,8 @@ export default function Pagination({
 
         setPage(pageUp);
         navogate(`/class-component/search/${pageUp}`);
-        const requestData = page % 20 === 0 ? 'nextRequest' : 'currentRequest';
+        const requestData = page % 20 ? 'currentRequest' : 'nextRequest';
+        setMaxPage(maxPage === pageUp ? pageUp + 20 : maxPage);
         request(pageUp, requestData);
     };
 
@@ -61,7 +63,7 @@ export default function Pagination({
         setPage(pageDown);
         navogate(`/class-component/search/${pageDown}`);
         const requestData =
-            pageDown % 20 === 0 ? 'previousRequest' : 'currentRequest';
+            pageDown % 20 ? 'currentRequest' : 'previousRequest';
         request(pageDown, requestData);
     };
 
@@ -156,7 +158,9 @@ export default function Pagination({
             >
                 {'<'}
             </button>
-            <span>{page}</span>
+            <span>
+                {page} / {maxPage}
+            </span>
             <button className="pagination-btn" onClick={handleClickPlus}>
                 {'>'}
             </button>
