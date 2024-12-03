@@ -15,6 +15,12 @@ interface PokemonProps {
     onInputData: requestDataI;
 }
 
+interface setAdditionalInformationI {
+    weight: string;
+    height: string;
+    types: string[];
+}
+
 export default function Pokemon({ onInputData }: PokemonProps) {
     const [inputData, setInputData] = useState<requestDataI>({
         name: '',
@@ -24,7 +30,13 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         previous: '',
         url: [],
     });
-
+    const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
+    const [additionalInformation, setAdditionalInformation] =
+        useState<setAdditionalInformationI>({
+            weight: '',
+            height: '',
+            types: [],
+        });
     const previousOnInputData = useRef(onInputData);
     useEffect(() => {
         if (previousOnInputData.current !== onInputData) {
@@ -37,9 +49,23 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         setInputData(data);
     };
 
+    const handleCurrentPage = (page: number) => {
+        setCurrentPokemonIndex(page);
+    };
+
+    const getPokemonInformation = async () => {
+        const request = await fetch(inputData.url[currentPokemonIndex]);
+        const { weight, height, types } = await request.json();
+        const typesOfPokemons = types.map(
+            (typesElements: { type: { name: string } }) =>
+                typesElements.type.name
+        );
+        setAdditionalInformation({ weight, height, types: typesOfPokemons });
+    };
+
     return (
         <div className="pokemon">
-            <div className="pokemon-cards">
+            <div className="pokemon-cards" onClick={getPokemonInformation}>
                 <div className="pokemon-card">
                     <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
                     {name && sprites && (
@@ -63,10 +89,18 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                         </p>
                     )}
                 </div>
+                {additionalInformation.weight && (
+                    <div className="pokemon-card">
+                        <div>weight: {additionalInformation.weight}</div>
+                        <div>height: {additionalInformation.height}</div>
+                        <div>types: {additionalInformation.types.join()}</div>
+                    </div>
+                )}
             </div>
             {!!url.length && (
                 <div className="pokemon-pagination">
                     <Pagination
+                        getPage={handleCurrentPage}
                         paginationData={inputData}
                         newTemplate={handleNewTemplate}
                     />

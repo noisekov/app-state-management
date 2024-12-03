@@ -3,6 +3,9 @@
     border-radius: 25px;
     padding: 10px;
     width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .pokemon-card__text {
@@ -23,4 +26,9 @@
 
 .pokemon-pagination {
     margin: 0 auto;
+}
+
+.pokemon-cards {
+    display: flex;
+    gap: 30px;
 }

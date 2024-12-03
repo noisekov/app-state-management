@@ -15,6 +15,7 @@ interface requestDataI {
 interface PaginationProps {
     paginationData: requestDataI;
     newTemplate: (data: requestDataI) => void;
+    getPage: (page: number) => void;
 }
 
 interface PokemonData {
@@ -31,11 +32,12 @@ type requestData = 'nextRequest' | 'currentRequest' | 'previousRequest';
 export default function Pagination({
     paginationData,
     newTemplate,
+    getPage,
 }: PaginationProps) {
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(20);
     const [isLoading, setIsLoading] = useState(false);
-    const navogate = useNavigate();
+    const navigate = useNavigate();
     const resultObj: requestDataI = {
         name: '',
         abilities: [],
@@ -48,7 +50,7 @@ export default function Pagination({
         const pageUp = page + 1;
 
         setPage(pageUp);
-        navogate(`/class-component/search/${pageUp}`);
+        navigate(`/class-component/search/${pageUp}`);
         const requestData = page % 20 ? 'currentRequest' : 'nextRequest';
         setMaxPage(maxPage === pageUp ? pageUp + 20 : maxPage);
         request(pageUp, requestData);
@@ -61,7 +63,7 @@ export default function Pagination({
         const pageDown = page - 1;
 
         setPage(pageDown);
-        navogate(`/class-component/search/${pageDown}`);
+        navigate(`/class-component/search/${pageDown}`);
         const requestData =
             pageDown % 20 ? 'currentRequest' : 'previousRequest';
         request(pageDown, requestData);
@@ -77,6 +79,7 @@ export default function Pagination({
             if (status !== 200) {
                 setIsLoading(false);
                 newTemplate(resultObj);
+                getPage(page - 1);
             }
 
             const data = await request.json();
@@ -98,6 +101,7 @@ export default function Pagination({
             if (status !== 200) {
                 setIsLoading(false);
                 newTemplate(resultObj);
+                getPage(page - 1);
             }
 
             const data = await request.json();
@@ -131,6 +135,7 @@ export default function Pagination({
             if (statusOnePokemonOnList !== 200) {
                 setIsLoading(false);
                 newTemplate(resultObj);
+                getPage(page - 1);
             }
 
             const dataOnePokemonInList = await requestOnePokemonInList.json();
@@ -146,6 +151,7 @@ export default function Pagination({
 
         setIsLoading(false);
         newTemplate(resultObj);
+        getPage(page - 1);
     };
 
     return isLoading ? (
