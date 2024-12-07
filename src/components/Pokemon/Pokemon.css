@@ -32,3 +32,51 @@
     display: flex;
     gap: 30px;
 }
+
+.pokemon-card__additional {
+    position: relative;
+}
+
+.pokemon-card__additional--close {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -16px;
+        display: block;
+        background: #fff;
+        transform: rotate(45deg) translateX(50%);
+        width: 35px;
+        height: 2px;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 8px;
+        display: block;
+        background: #fff;
+        transform: rotate(135deg) translateX(50%);
+        width: 35px;
+        height: 2px;
+    }
+}
+
+.pokemon-card__additional--close:hover {
+    animation: rotateAnimation 1s;
+}
+
+@keyframes rotateAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

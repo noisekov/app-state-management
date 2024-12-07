@@ -31,6 +31,8 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         url: [],
     });
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
+    const [additionalModalOpen, setAdditionalModalOpen] = useState(false);
+
     const [additionalInformation, setAdditionalInformation] =
         useState<setAdditionalInformationI>({
             weight: '',
@@ -54,6 +56,16 @@ export default function Pokemon({ onInputData }: PokemonProps) {
     };
 
     const getPokemonInformation = async () => {
+        if (additionalModalOpen) {
+            setAdditionalInformation({
+                weight: '',
+                height: '',
+                types: [],
+            });
+            setAdditionalModalOpen(false);
+            return;
+        }
+
         const request = await fetch(inputData.url[currentPokemonIndex]);
         const { weight, height, types } = await request.json();
         const typesOfPokemons = types.map(
@@ -61,12 +73,22 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                 typesElements.type.name
         );
         setAdditionalInformation({ weight, height, types: typesOfPokemons });
+        setAdditionalModalOpen(true);
+    };
+
+    const closeAddiionalInformation = () => {
+        setAdditionalInformation({
+            weight: '',
+            height: '',
+            types: [],
+        });
+        setAdditionalModalOpen(false);
     };
 
     return (
         <div className="pokemon">
-            <div className="pokemon-cards" onClick={getPokemonInformation}>
-                <div className="pokemon-card">
+            <div className="pokemon-cards">
+                <div className="pokemon-card" onClick={getPokemonInformation}>
                     <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
                     {name && sprites && (
                         <div className="pokemon-card__image">
@@ -89,11 +111,15 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                         </p>
                     )}
                 </div>
-                {additionalInformation.weight && (
-                    <div className="pokemon-card">
+                {additionalModalOpen && (
+                    <div className="pokemon-card pokemon-card__additional">
                         <div>weight: {additionalInformation.weight}</div>
                         <div>height: {additionalInformation.height}</div>
                         <div>types: {additionalInformation.types.join()}</div>
+                        <span
+                            className="pokemon-card__additional--close"
+                            onClick={closeAddiionalInformation}
+                        ></span>
                     </div>
                 )}
             </div>
@@ -103,6 +129,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                         getPage={handleCurrentPage}
                         paginationData={inputData}
                         newTemplate={handleNewTemplate}
+                        setCloseAddiionalInformation={closeAddiionalInformation}
                     />
                 </div>
             )}
