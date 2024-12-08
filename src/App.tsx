@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import Serach from './components/Search/Serach';
+import Search from './components/Search/Search';
 import Pokemon from './components/Pokemon/Pokemon';
 
 interface requestDataI {
@@ -36,7 +36,7 @@ export default function App() {
         <>
             <div className="page">
                 <div className="top">
-                    <Serach onInputData={handleData} />
+                    <Search onInputData={handleData} />
                 </div>
 
                 <div className="bottom">

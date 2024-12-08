@@ -18,11 +18,11 @@ interface PokemonData {
     abilities: { ability: { name: string } }[];
 }
 
-interface SerachProps {
+interface SearchProps {
     onInputData: (data: requestDataI) => void;
 }
 
-export default function Serach({ onInputData }: SerachProps) {
+export default function Search({ onInputData }: SearchProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [querySearch, setQuerySearch] = useState('');
 
