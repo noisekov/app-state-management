@@ -54,6 +54,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             types: [],
         });
         setAdditionalModalOpen(false);
+        setCurrentPokemonIndex(0);
     }, [onInputData]);
 
     const { sprites, name, abilities, isInputEmpty } = inputData;
@@ -76,7 +77,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             setAdditionalModalOpen(false);
             return;
         }
-
         const request = await fetch(inputData.url[currentPokemonIndex]);
         const { weight, height, types } = await request.json();
         const typesOfPokemons = types.map(
