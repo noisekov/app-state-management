@@ -22,7 +22,7 @@ interface SerachProps {
     onInputData: (data: requestDataI) => void;
 }
 
-export default function Serach(props: SerachProps) {
+export default function Serach({ onInputData }: SerachProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [querySearch, setQuerySearch] = useState('');
 
@@ -54,7 +54,7 @@ export default function Serach(props: SerachProps) {
 
         if (status !== 200) {
             setIsLoading(false);
-            props.onInputData(resultObj);
+            onInputData(resultObj);
         }
 
         const data = await request.json();
@@ -73,7 +73,7 @@ export default function Serach(props: SerachProps) {
                 await requestOnePokemonInList;
 
             if (statusOnePokemonOnList !== 200) {
-                props.onInputData(resultObj);
+                onInputData(resultObj);
             }
 
             const dataOnePokemonInList = await requestOnePokemonInList.json();
@@ -92,7 +92,7 @@ export default function Serach(props: SerachProps) {
         }
 
         setIsLoading(false);
-        props.onInputData(resultObj);
+        onInputData(resultObj);
     };
 
     const handleSubmit = async (
