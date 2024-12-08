@@ -9,6 +9,7 @@ interface requestDataI {
     next: string;
     previous: string;
     url: string[];
+    isInputEmpty: boolean;
 }
 
 interface PokemonData {
@@ -43,6 +44,7 @@ export default function Serach(props: SerachProps) {
             next: '',
             previous: '',
             url: [],
+            isInputEmpty: true,
         };
         setIsLoading(true);
         const request = await fetch(
@@ -58,7 +60,7 @@ export default function Serach(props: SerachProps) {
         const data = await request.json();
 
         if (value) {
-            parseObj(data);
+            parseObj(data, false);
         } else {
             resultObj.url = data.results.map(
                 (result: { url: string }) => result.url
@@ -76,15 +78,17 @@ export default function Serach(props: SerachProps) {
 
             const dataOnePokemonInList = await requestOnePokemonInList.json();
 
-            parseObj(dataOnePokemonInList);
+            parseObj(dataOnePokemonInList, true);
         }
 
-        function parseObj(data: PokemonData) {
+        function parseObj(data: PokemonData, isInputEmpty: boolean) {
             resultObj.name = data.name;
             resultObj.sprites = data.sprites.front_default;
             data.abilities.forEach((ability: { ability: { name: string } }) => {
                 resultObj.abilities.push(ability.ability.name);
             });
+            resultObj.url.push(`https://pokeapi.co/api/v2/pokemon/${value}`);
+            resultObj.isInputEmpty = isInputEmpty;
         }
 
         setIsLoading(false);

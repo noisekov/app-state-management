@@ -10,6 +10,7 @@ interface requestDataI {
     next: string;
     previous: string;
     url: string[];
+    isInputEmpty: boolean;
 }
 export default function App() {
     const [inputData, setInputData] = useState<requestDataI>({
@@ -19,6 +20,7 @@ export default function App() {
         next: '',
         previous: '',
         url: [],
+        isInputEmpty: true,
     });
     const [isError, setError] = useState(false);
 

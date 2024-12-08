@@ -1,3 +1,4 @@
+import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 import Pagination from '../Pagination/Pagination';
 import './Pokemon.css';
 import React, { useEffect, useRef, useState } from 'react';
@@ -9,6 +10,7 @@ interface requestDataI {
     next: string;
     previous: string;
     url: string[];
+    isInputEmpty: boolean;
 }
 
 interface PokemonProps {
@@ -29,6 +31,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         next: '',
         previous: '',
         url: [],
+        isInputEmpty: false,
     });
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
     const [additionalModalOpen, setAdditionalModalOpen] = useState(false);
@@ -45,7 +48,8 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             setInputData(onInputData);
         }
     }, [onInputData]);
-    const { sprites, name, abilities, url } = inputData;
+
+    const { sprites, name, abilities, isInputEmpty } = inputData;
 
     const handleNewTemplate = (data: requestDataI) => {
         setInputData(data);
@@ -112,18 +116,13 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                     )}
                 </div>
                 {additionalModalOpen && (
-                    <div className="pokemon-card pokemon-card__additional">
-                        <div>weight: {additionalInformation.weight}</div>
-                        <div>height: {additionalInformation.height}</div>
-                        <div>types: {additionalInformation.types.join()}</div>
-                        <span
-                            className="pokemon-card__additional--close"
-                            onClick={closeAddiionalInformation}
-                        ></span>
-                    </div>
+                    <AdditionalInfo
+                        closeAddiionalInformation={closeAddiionalInformation}
+                        additionalInformation={additionalInformation}
+                    />
                 )}
             </div>
-            {!!url.length && (
+            {isInputEmpty && (
                 <div className="pokemon-pagination">
                     <Pagination
                         getPage={handleCurrentPage}

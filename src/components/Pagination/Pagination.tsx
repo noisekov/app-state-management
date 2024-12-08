@@ -10,6 +10,7 @@ interface requestDataI {
     next: string;
     previous: string;
     url: string[];
+    isInputEmpty: boolean;
 }
 
 interface PaginationProps {
@@ -47,6 +48,7 @@ export default function Pagination({
         next: '',
         previous: '',
         url: [],
+        isInputEmpty: true,
     };
     const handleClickPlus = () => {
         const pageUp = page + 1;
