@@ -47,6 +47,13 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         if (previousOnInputData.current !== onInputData) {
             setInputData(onInputData);
         }
+
+        setAdditionalInformation({
+            weight: '',
+            height: '',
+            types: [],
+        });
+        setAdditionalModalOpen(false);
     }, [onInputData]);
 
     const { sprites, name, abilities, isInputEmpty } = inputData;
