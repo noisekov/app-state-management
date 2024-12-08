@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface setAdditionalInformationI {
     weight: string;
     height: string;

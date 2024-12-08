@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Search from './components/Search/Search';
 import Pokemon from './components/Pokemon/Pokemon';
 

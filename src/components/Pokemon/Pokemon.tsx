@@ -1,7 +1,7 @@
 import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 import Pagination from '../Pagination/Pagination';
 import './Pokemon.css';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface requestDataI {
     name: string;
