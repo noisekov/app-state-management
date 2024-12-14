@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Pagination.css';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
@@ -17,6 +17,7 @@ interface PaginationProps {
     paginationData: requestDataI;
     newTemplate: (data: requestDataI) => void;
     getPage: (page: number) => void;
+    setFirstPage: number;
 }
 
 interface PokemonData {
@@ -34,6 +35,7 @@ export default function Pagination({
     paginationData,
     newTemplate,
     getPage,
+    setFirstPage,
 }: PaginationProps) {
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(20);
@@ -48,6 +50,16 @@ export default function Pagination({
         url: [],
         isInputEmpty: true,
     };
+
+    useEffect(() => {
+        const page = setFirstPage + 1;
+        setPage(page);
+
+        if (page === 1) {
+            setMaxPage(20);
+        }
+    }, [setFirstPage]);
+
     const handleClickPlus = () => {
         const pageUp = page + 1;
 

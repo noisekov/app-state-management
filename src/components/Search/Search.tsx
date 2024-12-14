@@ -20,9 +20,10 @@ interface PokemonData {
 
 interface SearchProps {
     onInputData: (data: requestDataI) => void;
+    setFirstPage: () => void;
 }
 
-export default function Search({ onInputData }: SearchProps) {
+export default function Search({ onInputData, setFirstPage }: SearchProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [querySearch, setQuerySearch] = useState('');
 
@@ -93,6 +94,7 @@ export default function Search({ onInputData }: SearchProps) {
 
         setIsLoading(false);
         onInputData(resultObj);
+        setFirstPage();
     };
 
     const handleSubmit = async (

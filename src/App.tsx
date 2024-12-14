@@ -38,6 +38,10 @@ export default function App() {
         setPaginationPage(page);
     };
 
+    const setFirstPageWhenClickSearch = () => {
+        setPaginationPage(0);
+    };
+
     if (isError) {
         throw new Error('I crashed!');
     }
@@ -48,7 +52,10 @@ export default function App() {
         <>
             <div className="page">
                 <div className="top">
-                    <Search onInputData={handleData} />
+                    <Search
+                        onInputData={handleData}
+                        setFirstPage={setFirstPageWhenClickSearch}
+                    />
                 </div>
                 <div className="bottom">
                     <Pokemon
@@ -60,6 +67,7 @@ export default function App() {
                             getPage={handleCurrentPage}
                             paginationData={inputData}
                             newTemplate={handleNewTemplate}
+                            setFirstPage={paginationPage}
                         />
                     )}
                 </div>
