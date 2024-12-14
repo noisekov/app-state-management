@@ -57,7 +57,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         setCurrentPokemonIndex(0);
     }, [onInputData]);
 
-    const { sprites, name, abilities, isInputEmpty } = inputData;
+    const { sprites, name, abilities, isInputEmpty, url } = inputData;
 
     const handleNewTemplate = (data: requestDataI) => {
         setInputData(data);
@@ -77,7 +77,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             setAdditionalModalOpen(false);
             return;
         }
-        const request = await fetch(inputData.url[currentPokemonIndex]);
+        const request = await fetch(url[currentPokemonIndex]);
         const { weight, height, types } = await request.json();
         const typesOfPokemons = types.map(
             (typesElements: { type: { name: string } }) =>
@@ -129,7 +129,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                     />
                 )}
             </div>
-            {isInputEmpty && (
+            {isInputEmpty && !!url.length && (
                 <div className="pokemon-pagination">
                     <Pagination
                         getPage={handleCurrentPage}
