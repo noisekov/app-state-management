@@ -55,7 +55,7 @@ export default function Pagination({
         navigate(`/class-component/search/${pageUp}`);
         const requestData = page % 20 ? 'currentRequest' : 'nextRequest';
         setMaxPage(maxPage === pageUp ? pageUp + 20 : maxPage);
-        request(pageUp, requestData);
+        sendRequest(pageUp, requestData);
     };
 
     const handleClickMinus = () => {
@@ -68,23 +68,16 @@ export default function Pagination({
         navigate(`/class-component/search/${pageDown}`);
         const requestData =
             pageDown % 20 ? 'currentRequest' : 'previousRequest';
-        request(pageDown, requestData);
+        sendRequest(pageDown, requestData);
     };
 
-    const request = async (page: number, requestData: requestData) => {
+    const sendRequest = async (page: number, requestData: requestData) => {
         setIsLoading(true);
 
         if (requestData === 'currentRequest') {
-            const request = await fetch(paginationData.url[(page - 1) % 20]);
-            const { status } = await request;
-
-            if (status !== 200) {
-                setIsLoading(false);
-                newTemplate(resultObj);
-                getPage(page - 1);
-            }
-
-            const data = await request.json();
+            const data = await requestTemplate(
+                paginationData.url[(page - 1) % 20]
+            );
             parseObj(data);
         }
 
@@ -97,16 +90,7 @@ export default function Pagination({
                     ? paginationData.next
                     : paginationData.previous;
 
-            const request = await fetch(fetchElement);
-            const { status } = await request;
-
-            if (status !== 200) {
-                setIsLoading(false);
-                newTemplate(resultObj);
-                getPage(page - 1);
-            }
-
-            const data = await request.json();
+            const data = await requestTemplate(fetchElement);
             await parseObjWhenNextOrPrevious(data);
         }
 
@@ -155,6 +139,19 @@ export default function Pagination({
         newTemplate(resultObj);
         getPage(page - 1);
     };
+
+    async function requestTemplate(url: string) {
+        const request = await fetch(url);
+        const { status } = await request;
+
+        if (status !== 200) {
+            setIsLoading(false);
+            newTemplate(resultObj);
+            getPage(page - 1);
+        }
+
+        return await request.json();
+    }
 
     return isLoading ? (
         <Loader />
