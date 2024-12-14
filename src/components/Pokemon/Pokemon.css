@@ -24,10 +24,6 @@
     gap: 30px;
 }
 
-.pokemon-pagination {
-    margin: 0 auto;
-}
-
 .pokemon-cards {
     display: flex;
     gap: 30px;

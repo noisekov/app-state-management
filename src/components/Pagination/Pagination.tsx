@@ -17,7 +17,6 @@ interface PaginationProps {
     paginationData: requestDataI;
     newTemplate: (data: requestDataI) => void;
     getPage: (page: number) => void;
-    setCloseAddiionalInformation: () => void;
 }
 
 interface PokemonData {
@@ -35,7 +34,6 @@ export default function Pagination({
     paginationData,
     newTemplate,
     getPage,
-    setCloseAddiionalInformation,
 }: PaginationProps) {
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(20);
@@ -165,7 +163,6 @@ export default function Pagination({
             <button
                 className={'pagination-btn' + (page === 1 ? ' disabled' : '')}
                 onClick={() => {
-                    setCloseAddiionalInformation();
                     handleClickMinus();
                 }}
             >
@@ -177,7 +174,6 @@ export default function Pagination({
             <button
                 className="pagination-btn"
                 onClick={() => {
-                    setCloseAddiionalInformation();
                     handleClickPlus();
                 }}
             >

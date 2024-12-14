@@ -1,5 +1,4 @@
 import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
-import Pagination from '../Pagination/Pagination';
 import './Pokemon.css';
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,6 +14,7 @@ interface requestDataI {
 
 interface PokemonProps {
     onInputData: requestDataI;
+    handleCurrentPage: number;
 }
 
 interface setAdditionalInformationI {
@@ -23,7 +23,10 @@ interface setAdditionalInformationI {
     types: string[];
 }
 
-export default function Pokemon({ onInputData }: PokemonProps) {
+export default function Pokemon({
+    onInputData,
+    handleCurrentPage,
+}: PokemonProps) {
     const [inputData, setInputData] = useState<requestDataI>({
         name: '',
         abilities: [],
@@ -42,6 +45,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             height: '',
             types: [],
         });
+
     const previousOnInputData = useRef(onInputData);
     useEffect(() => {
         if (previousOnInputData.current !== onInputData) {
@@ -57,15 +61,20 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         setCurrentPokemonIndex(0);
     }, [onInputData]);
 
-    const { sprites, name, abilities, isInputEmpty, url } = inputData;
+    useEffect(() => {
+        setCurrentPokemonIndex(handleCurrentPage);
+    }, [handleCurrentPage]);
 
-    const handleNewTemplate = (data: requestDataI) => {
-        setInputData(data);
+    const closeAddiionalInformation = () => {
+        setAdditionalInformation({
+            weight: '',
+            height: '',
+            types: [],
+        });
+        setAdditionalModalOpen(false);
     };
 
-    const handleCurrentPage = (page: number) => {
-        setCurrentPokemonIndex(page);
-    };
+    const { sprites, name, abilities, url } = inputData;
 
     const getPokemonInformation = async () => {
         if (additionalModalOpen) {
@@ -75,8 +84,10 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                 types: [],
             });
             setAdditionalModalOpen(false);
+
             return;
         }
+
         const request = await fetch(url[currentPokemonIndex]);
         const { weight, height, types } = await request.json();
         const typesOfPokemons = types.map(
@@ -85,15 +96,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         );
         setAdditionalInformation({ weight, height, types: typesOfPokemons });
         setAdditionalModalOpen(true);
-    };
-
-    const closeAddiionalInformation = () => {
-        setAdditionalInformation({
-            weight: '',
-            height: '',
-            types: [],
-        });
-        setAdditionalModalOpen(false);
     };
 
     return (
@@ -129,16 +131,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                     />
                 )}
             </div>
-            {isInputEmpty && !!url.length && (
-                <div className="pokemon-pagination">
-                    <Pagination
-                        getPage={handleCurrentPage}
-                        paginationData={inputData}
-                        newTemplate={handleNewTemplate}
-                        setCloseAddiionalInformation={closeAddiionalInformation}
-                    />
-                </div>
-            )}
         </div>
     );
 }
