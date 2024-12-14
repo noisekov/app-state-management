@@ -37,8 +37,9 @@ export default function Pagination({
     getPage,
     setFirstPage,
 }: PaginationProps) {
+    const MAX_PAGE_LOAD = 20;
     const [page, setPage] = useState(1);
-    const [maxPage, setMaxPage] = useState(20);
+    const [maxPage, setMaxPage] = useState(MAX_PAGE_LOAD);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const resultObj: requestDataI = {
@@ -56,7 +57,7 @@ export default function Pagination({
         setPage(page);
 
         if (page === 1) {
-            setMaxPage(20);
+            setMaxPage(MAX_PAGE_LOAD);
         }
     }, [setFirstPage]);
 
@@ -65,8 +66,9 @@ export default function Pagination({
 
         setPage(pageUp);
         navigate(`/class-component/search/${pageUp}`);
-        const requestData = page % 20 ? 'currentRequest' : 'nextRequest';
-        setMaxPage(maxPage === pageUp ? pageUp + 20 : maxPage);
+        const requestData =
+            page % MAX_PAGE_LOAD ? 'currentRequest' : 'nextRequest';
+        setMaxPage(maxPage === pageUp ? pageUp + MAX_PAGE_LOAD : maxPage);
         sendRequest(pageUp, requestData);
     };
 
@@ -79,7 +81,7 @@ export default function Pagination({
         setPage(pageDown);
         navigate(`/class-component/search/${pageDown}`);
         const requestData =
-            pageDown % 20 ? 'currentRequest' : 'previousRequest';
+            pageDown % MAX_PAGE_LOAD ? 'currentRequest' : 'previousRequest';
         sendRequest(pageDown, requestData);
     };
 
@@ -88,7 +90,7 @@ export default function Pagination({
 
         if (requestData === 'currentRequest') {
             const data = await requestTemplate(
-                paginationData.url[(page - 1) % 20]
+                paginationData.url[(page - 1) % MAX_PAGE_LOAD]
             );
             parseObj(data);
         }
@@ -125,7 +127,7 @@ export default function Pagination({
             resultObj.previous = data.previous;
             resultObj.next = data.next;
             const requestOnePokemonInList = await fetch(
-                data.results[(page - 1) % 20].url
+                data.results[(page - 1) % MAX_PAGE_LOAD].url
             );
             const { status: statusOnePokemonOnList } =
                 await requestOnePokemonInList;

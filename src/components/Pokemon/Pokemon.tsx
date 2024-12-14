@@ -62,7 +62,8 @@ export default function Pokemon({
     }, [onInputData]);
 
     useEffect(() => {
-        setCurrentPokemonIndex(handleCurrentPage);
+        const MAX_PAGE_LOAD = 20;
+        setCurrentPokemonIndex(handleCurrentPage % MAX_PAGE_LOAD);
     }, [handleCurrentPage]);
 
     const closeAddiionalInformation = () => {
