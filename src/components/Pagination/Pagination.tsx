@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Pagination.css';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router';
 import Loader from '../Loader/Loader';
 
 interface requestDataI {
@@ -41,7 +41,7 @@ export default function Pagination({
     const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(MAX_PAGE_LOAD);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const resultObj: requestDataI = {
         name: '',
         abilities: [],
@@ -65,7 +65,7 @@ export default function Pagination({
         const pageUp = page + 1;
 
         setPage(pageUp);
-        navigate(`/class-component/search/${pageUp}`);
+        //navigate(`/class-component/search/${pageUp}`);
         const requestData =
             page % MAX_PAGE_LOAD ? 'currentRequest' : 'nextRequest';
         setMaxPage(maxPage === pageUp ? pageUp + MAX_PAGE_LOAD : maxPage);
@@ -79,7 +79,7 @@ export default function Pagination({
         const pageDown = page - 1;
 
         setPage(pageDown);
-        navigate(`/class-component/search/${pageDown}`);
+        //navigate(`/class-component/search/${pageDown}`);
         const requestData =
             pageDown % MAX_PAGE_LOAD ? 'currentRequest' : 'previousRequest';
         sendRequest(pageDown, requestData);
