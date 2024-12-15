@@ -4,6 +4,7 @@ import App from './App.tsx';
 import './index.css';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
+import NotFound from './page/NotFound.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
@@ -11,10 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
             <BrowserRouter>
                 <Routes>
                     <Route path="/class-component/" element={<App />} />
-                    <Route
-                        path="/class-component/*"
-                        element={<div>страницы нет</div>}
-                    />
+                    <Route path="/class-component/*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
         </ErrorBoundary>
