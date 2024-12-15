@@ -11,8 +11,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <ErrorBoundary>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/class-component/" element={<App />} />
-                    <Route path="/class-component/*" element={<NotFound />} />
+                    <Route path="/:search?/:page?" element={<App />} />
+                    <Route path="/*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
         </ErrorBoundary>
