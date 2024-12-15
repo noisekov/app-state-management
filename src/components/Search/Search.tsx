@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import Loader from '../Loader/Loader';
 import './Search.css';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
@@ -26,6 +27,7 @@ interface SearchProps {
 export default function Search({ onInputData, setFirstPage }: SearchProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [querySearch, setQuerySearch] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedData: string | null = localStorage.getItem('data') || '';
@@ -79,6 +81,7 @@ export default function Search({ onInputData, setFirstPage }: SearchProps) {
 
             const dataOnePokemonInList = await requestOnePokemonInList.json();
 
+            navigate(`/search/1`);
             parseObj(dataOnePokemonInList, true);
         }
 
