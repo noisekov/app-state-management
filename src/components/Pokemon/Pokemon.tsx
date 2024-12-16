@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 import './Pokemon.css';
 import { useEffect, useRef, useState } from 'react';
@@ -38,7 +39,7 @@ export default function Pokemon({
     });
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
     const [additionalModalOpen, setAdditionalModalOpen] = useState(false);
-
+    const navigate = useNavigate();
     const [additionalInformation, setAdditionalInformation] =
         useState<setAdditionalInformationI>({
             weight: '',
@@ -73,6 +74,7 @@ export default function Pokemon({
             types: [],
         });
         setAdditionalModalOpen(false);
+        navigate(-1);
     };
 
     const { sprites, name, abilities, url } = inputData;
@@ -85,6 +87,7 @@ export default function Pokemon({
                 types: [],
             });
             setAdditionalModalOpen(false);
+            navigate(-1);
 
             return;
         }
@@ -97,6 +100,7 @@ export default function Pokemon({
         );
         setAdditionalInformation({ weight, height, types: typesOfPokemons });
         setAdditionalModalOpen(true);
+        navigate(`?frontpage=${handleCurrentPage + 1}&details=1`);
     };
 
     return (
