@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import './Pagination.css';
 import { useNavigate } from 'react-router';
 import Loader from '../Loader/Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@reduxjs/toolkit/query';
+import { decrement, increment } from '../../store/pageReducer';
 
 interface requestDataI {
     name: string;
@@ -16,8 +19,6 @@ interface requestDataI {
 interface PaginationProps {
     paginationData: requestDataI;
     newTemplate: (data: requestDataI) => void;
-    getPage: (page: number) => void;
-    setFirstPage: number;
 }
 
 interface PokemonData {
@@ -34,14 +35,13 @@ type requestData = 'nextRequest' | 'currentRequest' | 'previousRequest';
 export default function Pagination({
     paginationData,
     newTemplate,
-    getPage,
-    setFirstPage,
 }: PaginationProps) {
     const MAX_PAGE_LOAD = 20;
-    const [page, setPage] = useState(1);
     const [maxPage, setMaxPage] = useState(MAX_PAGE_LOAD);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const page = useSelector((state: RootState) => state.page.value);
+    const dispatch = useDispatch();
 
     const resultObj: requestDataI = {
         name: '',
@@ -54,18 +54,15 @@ export default function Pagination({
     };
 
     useEffect(() => {
-        const page = setFirstPage + 1;
-        setPage(page);
-
         if (page === 1) {
             setMaxPage(MAX_PAGE_LOAD);
         }
-    }, [setFirstPage]);
+    }, [page]);
 
     const handleClickPlus = () => {
         const pageUp = page + 1;
 
-        setPage(pageUp);
+        dispatch(increment());
         navigate(`/search/${pageUp}`);
         const requestData =
             page % MAX_PAGE_LOAD ? 'currentRequest' : 'nextRequest';
@@ -79,7 +76,7 @@ export default function Pagination({
         }
         const pageDown = page - 1;
 
-        setPage(pageDown);
+        dispatch(decrement());
         navigate(`/search/${pageDown}`);
         const requestData =
             pageDown % MAX_PAGE_LOAD ? 'currentRequest' : 'previousRequest';
@@ -136,7 +133,6 @@ export default function Pagination({
             if (statusOnePokemonOnList !== 200) {
                 setIsLoading(false);
                 newTemplate(resultObj);
-                getPage(page - 1);
             }
 
             const dataOnePokemonInList = await requestOnePokemonInList.json();
@@ -152,7 +148,6 @@ export default function Pagination({
 
         setIsLoading(false);
         newTemplate(resultObj);
-        getPage(page - 1);
     };
 
     async function requestTemplate(url: string) {
@@ -162,7 +157,6 @@ export default function Pagination({
         if (status !== 200) {
             setIsLoading(false);
             newTemplate(resultObj);
-            getPage(page - 1);
         }
 
         return await request.json();

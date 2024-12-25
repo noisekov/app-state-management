@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router';
 import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 import './Pokemon.css';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@reduxjs/toolkit/query';
 
 interface requestDataI {
     name: string;
@@ -15,7 +17,6 @@ interface requestDataI {
 
 interface PokemonProps {
     onInputData: requestDataI;
-    handleCurrentPage: number;
 }
 
 interface setAdditionalInformationI {
@@ -24,10 +25,8 @@ interface setAdditionalInformationI {
     types: string[];
 }
 
-export default function Pokemon({
-    onInputData,
-    handleCurrentPage,
-}: PokemonProps) {
+export default function Pokemon({ onInputData }: PokemonProps) {
+    const MAX_PAGE_LOAD = 20;
     const [inputData, setInputData] = useState<requestDataI>({
         name: '',
         abilities: [],
@@ -46,6 +45,7 @@ export default function Pokemon({
             height: '',
             types: [],
         });
+    const page = useSelector((state: RootState) => state.page.value);
 
     const previousOnInputData = useRef(onInputData);
     useEffect(() => {
@@ -59,13 +59,12 @@ export default function Pokemon({
             types: [],
         });
         setAdditionalModalOpen(false);
-        setCurrentPokemonIndex(0);
+        setCurrentPokemonIndex((page - 1) % MAX_PAGE_LOAD);
     }, [onInputData]);
 
     useEffect(() => {
-        const MAX_PAGE_LOAD = 20;
-        setCurrentPokemonIndex(handleCurrentPage % MAX_PAGE_LOAD);
-    }, [handleCurrentPage]);
+        setCurrentPokemonIndex((page - 1) % MAX_PAGE_LOAD);
+    }, [page]);
 
     const closeAddiionalInformation = () => {
         setAdditionalInformation({
@@ -91,7 +90,6 @@ export default function Pokemon({
 
             return;
         }
-
         const request = await fetch(url[currentPokemonIndex]);
         const { weight, height, types } = await request.json();
         const typesOfPokemons = types.map(
@@ -100,7 +98,7 @@ export default function Pokemon({
         );
         setAdditionalInformation({ weight, height, types: typesOfPokemons });
         setAdditionalModalOpen(true);
-        navigate(`?frontpage=${handleCurrentPage + 1}&details=1`);
+        navigate(`?frontpage=${page}&details=1`);
     };
 
     return (

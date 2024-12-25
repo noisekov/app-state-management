@@ -24,7 +24,6 @@ export default function App() {
         isInputEmpty: true,
     });
     const [isError, setError] = useState(false);
-    const [paginationPage, setPaginationPage] = useState(0);
 
     const handleData = (inputData: requestDataI) => {
         setInputData(inputData);
@@ -32,14 +31,6 @@ export default function App() {
 
     const handleNewTemplate = (data: requestDataI) => {
         setInputData(data);
-    };
-
-    const handleCurrentPage = (page: number) => {
-        setPaginationPage(page);
-    };
-
-    const setFirstPageWhenClickSearch = () => {
-        setPaginationPage(0);
     };
 
     if (isError) {
@@ -52,22 +43,14 @@ export default function App() {
         <>
             <div className="page">
                 <div className="top">
-                    <Search
-                        onInputData={handleData}
-                        setFirstPage={setFirstPageWhenClickSearch}
-                    />
+                    <Search onInputData={handleData} />
                 </div>
                 <div className="bottom">
-                    <Pokemon
-                        onInputData={inputData}
-                        handleCurrentPage={paginationPage}
-                    />
+                    <Pokemon onInputData={inputData} />
                     {isInputEmpty && !!url.length && (
                         <Pagination
-                            getPage={handleCurrentPage}
                             paginationData={inputData}
                             newTemplate={handleNewTemplate}
-                            setFirstPage={paginationPage}
                         />
                     )}
                 </div>

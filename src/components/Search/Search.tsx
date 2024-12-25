@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router';
 import Loader from '../Loader/Loader';
 import './Search.css';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { reset } from '../../store/pageReducer';
 
 interface requestDataI {
     name: string;
@@ -21,13 +23,13 @@ interface PokemonData {
 
 interface SearchProps {
     onInputData: (data: requestDataI) => void;
-    setFirstPage: () => void;
 }
 
-export default function Search({ onInputData, setFirstPage }: SearchProps) {
+export default function Search({ onInputData }: SearchProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [querySearch, setQuerySearch] = useState('');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const storedData: string | null = localStorage.getItem('data') || '';
@@ -97,7 +99,7 @@ export default function Search({ onInputData, setFirstPage }: SearchProps) {
 
         setIsLoading(false);
         onInputData(resultObj);
-        setFirstPage();
+        dispatch(reset());
     };
 
     const handleSubmit = async (
