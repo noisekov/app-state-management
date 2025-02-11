@@ -56,12 +56,12 @@ export default function App() {
                 </div>
             </div>
             <button
-                className="button button--error"
+                className="button button--theme"
                 onClick={() => {
-                    setError(true);
+                    console.log('change theme');
                 }}
             >
-                throw an error
+                theme
             </button>
         </>
     );
