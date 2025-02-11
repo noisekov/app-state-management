@@ -8,7 +8,13 @@ import NotFound from './page/NotFound.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store.tsx';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root');
+
+if (!root) {
+    throw new Error('Root element not found');
+}
+
+ReactDOM.createRoot(root).render(
     <React.StrictMode>
         <ErrorBoundary>
             <Provider store={store}>

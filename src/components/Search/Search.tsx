@@ -35,7 +35,7 @@ export default function Search({ onInputData }: SearchProps) {
         const storedData: string | null = localStorage.getItem('data') || '';
         setQuerySearch(storedData);
         request(storedData);
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuerySearch(event.target.value);

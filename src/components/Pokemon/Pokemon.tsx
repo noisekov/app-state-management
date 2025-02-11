@@ -60,7 +60,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         });
         setAdditionalModalOpen(false);
         setCurrentPokemonIndex((page - 1) % MAX_PAGE_LOAD);
-    }, [onInputData]);
+    }, [onInputData, page]);
 
     useEffect(() => {
         setCurrentPokemonIndex((page - 1) % MAX_PAGE_LOAD);
