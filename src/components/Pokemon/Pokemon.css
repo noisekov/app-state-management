@@ -1,5 +1,5 @@
 .pokemon-card {
-    box-shadow: 0 0px 6px 3px white;
+    box-shadow: 0 0px 6px 3px var(--text-color);
     border-radius: 25px;
     padding: 10px;
     width: 320px;
@@ -25,6 +25,10 @@
     gap: 30px;
 }
 
+.pokemon-img {
+    filter: drop-shadow(3px 4px 12px var(--bg-filter));
+}
+
 .pokemon-cards {
     display: flex;
     gap: 30px;
@@ -48,7 +52,7 @@
         top: 0;
         left: -16px;
         display: block;
-        background: #fff;
+        background: var(--text-color);
         transform: rotate(45deg) translateX(50%);
         width: 35px;
         height: 2px;
@@ -59,7 +63,7 @@
         top: 0;
         left: 8px;
         display: block;
-        background: #fff;
+        background: var(--text-color);
         transform: rotate(135deg) translateX(50%);
         width: 35px;
         height: 2px;

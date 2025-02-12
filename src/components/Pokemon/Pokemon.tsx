@@ -109,6 +109,7 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                     {name && sprites && (
                         <div className="pokemon-card__image">
                             <img
+                                className="pokemon-img "
                                 src={sprites}
                                 alt={name}
                                 width={150}

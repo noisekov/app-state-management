@@ -117,7 +117,7 @@ export default function Search({ onInputData }: SearchProps) {
     return isLoading ? (
         <Loader />
     ) : (
-        <form onSubmit={handleSubmit}>
+        <form className="form-search" onSubmit={handleSubmit}>
             <input
                 value={querySearch}
                 onChange={handleChange}

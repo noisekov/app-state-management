@@ -13,7 +13,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #3ff9dc;
+    background-color: var(--text-color);
 }
 
 .pulse-bubble-1 {
