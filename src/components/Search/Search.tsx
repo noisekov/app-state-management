@@ -123,6 +123,7 @@ export default function Search({ onInputData }: SearchProps) {
                 onChange={handleChange}
                 type="search"
                 className="input-search"
+                placeholder="For example Pikachu"
             />
             <button className="button" type="submit">
                 Search
