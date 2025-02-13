@@ -22,10 +22,7 @@ ReactDOM.createRoot(root).render(
                 <Provider store={store}>
                     <BrowserRouter>
                         <Routes>
-                            <Route
-                                path="/:search?/:page?/*"
-                                element={<App />}
-                            />
+                            <Route path="/" element={<App />} />
                             <Route path="/*" element={<NotFound />} />
                         </Routes>
                     </BrowserRouter>

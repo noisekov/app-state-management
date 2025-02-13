@@ -39,7 +39,6 @@ export default function Pagination({
     const MAX_PAGE_LOAD = 20;
     const [maxPage, setMaxPage] = useState(MAX_PAGE_LOAD);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
     const page = useSelector((state: RootState) => state.page.value);
     const dispatch = useDispatch();
 
@@ -63,7 +62,6 @@ export default function Pagination({
         const pageUp = page + 1;
 
         dispatch(increment());
-        navigate(`/search/${pageUp}`);
         const requestData =
             page % MAX_PAGE_LOAD ? 'currentRequest' : 'nextRequest';
         setMaxPage(maxPage === pageUp ? pageUp + MAX_PAGE_LOAD : maxPage);
@@ -77,7 +75,6 @@ export default function Pagination({
         const pageDown = page - 1;
 
         dispatch(decrement());
-        navigate(`/search/${pageDown}`);
         const requestData =
             pageDown % MAX_PAGE_LOAD ? 'currentRequest' : 'previousRequest';
         sendRequest(pageDown, requestData);

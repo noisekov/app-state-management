@@ -28,7 +28,6 @@ interface SearchProps {
 export default function Search({ onInputData }: SearchProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [querySearch, setQuerySearch] = useState('');
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -83,7 +82,6 @@ export default function Search({ onInputData }: SearchProps) {
 
             const dataOnePokemonInList = await requestOnePokemonInList.json();
 
-            navigate(`/search/1`);
             parseObj(dataOnePokemonInList, true);
         }
 

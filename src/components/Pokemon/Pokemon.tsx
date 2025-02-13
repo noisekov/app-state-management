@@ -38,7 +38,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
     });
     const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
     const [additionalModalOpen, setAdditionalModalOpen] = useState(false);
-    const navigate = useNavigate();
     const [additionalInformation, setAdditionalInformation] =
         useState<setAdditionalInformationI>({
             weight: '',
@@ -73,7 +72,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
             types: [],
         });
         setAdditionalModalOpen(false);
-        navigate(-1);
     };
 
     const { sprites, name, abilities, url } = inputData;
@@ -86,7 +84,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
                 types: [],
             });
             setAdditionalModalOpen(false);
-            navigate(-1);
 
             return;
         }
@@ -98,7 +95,6 @@ export default function Pokemon({ onInputData }: PokemonProps) {
         );
         setAdditionalInformation({ weight, height, types: typesOfPokemons });
         setAdditionalModalOpen(true);
-        navigate(`?frontpage=${page}&details=1`);
     };
 
     return (
