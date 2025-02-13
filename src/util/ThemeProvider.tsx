@@ -1,16 +1,9 @@
-import { useState, createContext, useContext, useEffect } from 'react';
-
-const ThemeContext = createContext({
-    toggleTheme: () => {},
-    darkMode: true,
-});
+import { useState, useEffect } from 'react';
+import { ThemeContext } from '../hooks/UseTheme.tsx';
 
 interface ThemeContextProps {
     children: React.ReactNode;
 }
-export const useTheme = () => {
-    return useContext(ThemeContext);
-};
 
 export const ThemeProvider = ({ children }: ThemeContextProps) => {
     const [darkMode, setDarkMode] = useState(true);

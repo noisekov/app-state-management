@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Search from './components/Search/Search';
 import Pokemon from './components/Pokemon/Pokemon';
 import Pagination from './components/Pagination/Pagination';
-import { useTheme } from './util/ThemeProvider';
+import { useTheme } from './hooks/UseTheme';
 
 interface requestDataI {
     name: string;

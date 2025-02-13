@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router';
 import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 import './Pokemon.css';
 import { useEffect, useRef, useState } from 'react';

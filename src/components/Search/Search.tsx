@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router';
 import Loader from '../Loader/Loader';
 import './Search.css';
 import React, { SyntheticEvent, useEffect, useState } from 'react';

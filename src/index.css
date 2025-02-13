@@ -20,6 +20,7 @@
     --bg-btn--active: #535bf2;
     --bg-btn-pagination: #876666;
     --bg-filter: #1a1a1a;
+    --placholder-color: rgb(255 255 255 / 0.7);
 }
 
 [data-theme='dark'] {
@@ -31,6 +32,7 @@
     --bg-btn--active: #535bf2;
     --bg-btn-pagination: #676767;
     --bg-filter: rgb(51, 152, 152);
+    --placholder-color: #ffffff66;
 }
 
 *,

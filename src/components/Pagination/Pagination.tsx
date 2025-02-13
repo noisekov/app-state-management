@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import './Pagination.css';
-import { useNavigate } from 'react-router';
 import Loader from '../Loader/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@reduxjs/toolkit/query';
