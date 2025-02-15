@@ -10,21 +10,19 @@ export default function Pokemon() {
 
     return (
         <div className="pokemon">
-            <div className="pokemon-cards">
-                {error ? (
-                    <h1>Incorrect input value</h1>
-                ) : isLoading ? (
-                    <Loader />
-                ) : data ? (
-                    <>
-                        {storeData.map((pokemon, index) => (
-                            <div className="pokemon-card" key={index}>
-                                {pokemon.name}
-                            </div>
-                        ))}
-                    </>
-                ) : null}
-            </div>
+            {error ? (
+                <h1>Incorrect input value</h1>
+            ) : isLoading ? (
+                <Loader />
+            ) : data ? (
+                <div className="pokemon-cards">
+                    {storeData.map((pokemon, index) => (
+                        <div className="pokemon-card" key={index}>
+                            {pokemon.name}
+                        </div>
+                    ))}
+                </div>
+            ) : null}
         </div>
     );
 }
