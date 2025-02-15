@@ -1,3 +1,1 @@
-# React + TypeScript + Vite
-
-Functional components with RTK
+# React FC, Redux Toolkit, RTK Query, Context api, TypeScript
