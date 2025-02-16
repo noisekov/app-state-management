@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useEffect, useState } from 'react';
 import { useGetPokemonByNameQuery } from '../../APISlice/ApiSlice';
+import Loader from '../Loader/Loader';
 
 export default function Pokemon() {
     const storeData = useSelector((state: RootState) => state.data);
@@ -13,12 +14,14 @@ export default function Pokemon() {
         setSerchQuery(search);
     }, [search]);
 
-    const { data, isError } = useGetPokemonByNameQuery(searchQuery);
+    const { data, isError, isFetching } = useGetPokemonByNameQuery(searchQuery);
     const { name: foundedPokemonFromSearch } = { ...data };
 
     return (
         <div className="pokemon">
-            {isError ? (
+            {isFetching ? (
+                <Loader />
+            ) : isError ? (
                 <div>Incorrect Input Value</div>
             ) : foundedPokemonFromSearch ? (
                 <div className="pokemon-cards">
