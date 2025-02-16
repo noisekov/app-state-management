@@ -7,6 +7,12 @@
     justify-content: center;
     cursor: pointer;
     min-width: 150px;
+    transition: all 0.1s ease;
+
+    &:hover {
+        background-color: var(--text-color);
+        color: var(--bg-color);
+    }
 }
 
 .pokemon-card__text {
