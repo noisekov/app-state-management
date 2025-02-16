@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './Pagination.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../../store/pageReducer';
@@ -12,12 +12,18 @@ export default function Pagination() {
     const page = useSelector((state: RootState) => state.page.value);
     const { data } = useListPostsQuery((page - 1) * POKEMONS_IN_LIST);
     const { results } = { ...data };
+    const search = useSelector((state: RootState) => state.searchQuery);
+    const [hasSearch, setHasSearch] = useState(false);
 
     useEffect(() => {
         if (results) {
             dispatch(addData(results));
         }
     }, [results, dispatch]);
+
+    useEffect(() => {
+        setHasSearch(!!search);
+    }, [search]);
 
     const handleClickPlus = () => {
         dispatch(increment());
@@ -28,7 +34,7 @@ export default function Pagination() {
         dispatch(decrement());
     };
 
-    return (
+    return hasSearch ? null : (
         <div className="pagination">
             <button
                 className={'pagination-btn' + (page === 1 ? ' disabled' : '')}

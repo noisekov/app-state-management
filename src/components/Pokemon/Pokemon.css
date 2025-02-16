@@ -31,8 +31,11 @@
 
 .pokemon-cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
+}
+
+.pokemon-cards.grid {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .pokemon-card__additional {

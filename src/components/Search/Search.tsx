@@ -1,19 +1,25 @@
+import { useDispatch } from 'react-redux';
 import './Search.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
+import { addSearch, cleanSearch } from '../../store/searchReducer';
+
 export default function Search() {
     const [query, setQuery] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const storedData: string = localStorage.getItem('data') || '';
         setQuery(storedData);
-    }, []);
+        dispatch(addSearch(storedData));
+    }, [dispatch]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
 
         if (event.target.value === '') {
             localStorage.setItem('data', event.target.value);
+            dispatch(cleanSearch());
         }
     };
 
@@ -26,6 +32,7 @@ export default function Search() {
         ).value.trim();
 
         localStorage.setItem('data', inputValue);
+        dispatch(addSearch(inputValue));
     };
 
     return (
