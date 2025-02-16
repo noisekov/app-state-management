@@ -5,12 +5,16 @@ export default function Search() {
     const [query, setQuery] = useState('');
 
     useEffect(() => {
-        const storedData: string | null = localStorage.getItem('data') || '';
+        const storedData: string = localStorage.getItem('data') || '';
         setQuery(storedData);
     }, []);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setQuery(event.target.value);
+
+        if (event.target.value === '') {
+            localStorage.setItem('data', event.target.value);
+        }
     };
 
     const handleSubmit = async (
@@ -22,7 +26,6 @@ export default function Search() {
         ).value.trim();
 
         localStorage.setItem('data', inputValue);
-        setQuery(inputValue);
     };
 
     return (
