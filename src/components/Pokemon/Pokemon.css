@@ -16,30 +16,10 @@
     }
 }
 
-.pokemon-card__text {
-    text-align: left;
-}
-
-.pokemon-card__image {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-}
-
 .pokemon {
     display: flex;
     flex-direction: column;
     gap: 30px;
-}
-
-.pokemon-input {
-    cursor: pointer;
-    width: 15px;
-    height: 15px;
-}
-
-.pokemon-img {
-    filter: drop-shadow(3px 4px 12px var(--bg-filter));
 }
 
 .pokemon-cards {
@@ -49,52 +29,4 @@
 
 .pokemon-cards.grid {
     grid-template-columns: repeat(4, 1fr);
-}
-
-.pokemon-card__additional {
-    position: relative;
-    cursor: default;
-}
-
-.pokemon-card__additional--close {
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    top: 15px;
-    right: 15px;
-    cursor: pointer;
-    &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -16px;
-        display: block;
-        background: var(--text-color);
-        transform: rotate(45deg) translateX(50%);
-        width: 35px;
-        height: 2px;
-    }
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 8px;
-        display: block;
-        background: var(--text-color);
-        transform: rotate(135deg) translateX(50%);
-        width: 35px;
-        height: 2px;
-    }
-    &:hover {
-        animation: rotateAnimation 1s;
-    }
-}
-
-@keyframes rotateAnimation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }

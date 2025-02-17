@@ -1,25 +1,31 @@
-interface setAdditionalInformationI {
-    weight: string;
-    height: string;
-    types: string[];
-}
+import { createPortal } from 'react-dom';
+import './Additionalnfo.css';
 
-export default function AdditionalInfo({
-    additionalInformation,
-    closeAddiionalInformation,
-}: {
-    additionalInformation: setAdditionalInformationI;
-    closeAddiionalInformation: () => void;
-}) {
-    return (
-        <div className="pokemon-card pokemon-card__additional">
-            <div>weight: {additionalInformation.weight}</div>
-            <div>height: {additionalInformation.height}</div>
-            <div>types: {additionalInformation.types.join()}</div>
-            <span
-                className="pokemon-card__additional--close"
-                onClick={closeAddiionalInformation}
-            ></span>
-        </div>
+type Props = {
+    toggleModal: () => void;
+};
+
+export default function AdditionalInfo({ toggleModal }: Props) {
+    return createPortal(
+        <div
+            className="additional-info"
+            onClick={(event) => {
+                if (event.target === event.currentTarget) {
+                    toggleModal();
+                }
+            }}
+        >
+            <div className="additional-info__modal">
+                Pokemon info
+                <div>weight: </div>
+                <div>height: </div>
+                <div>types: </div>
+                <span
+                    className="additional-info__modal-close"
+                    onClick={() => toggleModal()}
+                ></span>
+            </div>
+        </div>,
+        document.body
     );
 }

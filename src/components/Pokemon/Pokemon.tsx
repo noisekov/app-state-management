@@ -9,6 +9,7 @@ import {
     removeCheckedPokemon,
 } from '../../store/chekedPokemons';
 import ModalSelectedPokemon from '../ModalSelectedPokemon/ModalSelectedPokemon';
+import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 
 export default function Pokemon() {
     const storeData = useSelector((state: RootState) => state.data);
@@ -42,6 +43,11 @@ export default function Pokemon() {
         dispatch(removeCheckedPokemon(pokemonName));
     };
 
+    const [showModal, setShowModal] = useState(false);
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
+
     return (
         <div className="pokemon">
             {isFetching ? (
@@ -50,7 +56,7 @@ export default function Pokemon() {
                 <>Incorrect Input Value</>
             ) : foundedPokemonFromSearch ? (
                 <div className="pokemon-cards">
-                    <div className="pokemon-card">
+                    <div className="pokemon-card" onClick={toggleModal}>
                         {foundedPokemonFromSearch}
                     </div>
                 </div>
@@ -66,12 +72,14 @@ export default function Pokemon() {
                                 checked={checkedPokemons.some(
                                     (item) => item.name === pokemon.name
                                 )}
+                                onClick={toggleModal}
                             />
                         </label>
                     ))}
                     <ModalSelectedPokemon />
                 </div>
             )}
+            {showModal && <AdditionalInfo toggleModal={toggleModal} />}
         </div>
     );
 }
