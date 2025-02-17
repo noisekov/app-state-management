@@ -12,6 +12,14 @@ export default function ModalSelectedPokemon() {
     const dispatch = useDispatch();
     const unselectCheckedPokemons = () => dispatch(cleanCheckedPokemons());
 
+    const downloadFile = () => {
+        const csvFileBody = checkedPokemons.reduce(
+            (acc, pokemon) => `${acc}${pokemon.name}\r\n`,
+            'data:text/csv;charset=utf-8,'
+        );
+        window.location.href = encodeURI(csvFileBody);
+    };
+
     return (
         !!howManyChecked &&
         createPortal(
@@ -32,6 +40,7 @@ export default function ModalSelectedPokemon() {
                 <button
                     type="button"
                     className="button modal__button--download"
+                    onClick={downloadFile}
                 >
                     Download
                 </button>
