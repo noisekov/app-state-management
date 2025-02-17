@@ -1,9 +1,10 @@
 .pokemon-card {
     box-shadow: 0 0px 6px 3px var(--text-color);
-    border-radius: 25px;
+    border-radius: 15px;
     padding: 10px;
     display: flex;
     justify-content: center;
+    align-items: center;
     cursor: pointer;
     min-width: 150px;
     transition: all 0.1s ease;
@@ -29,6 +30,12 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+.pokemon-input {
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
 }
 
 .pokemon-img {
