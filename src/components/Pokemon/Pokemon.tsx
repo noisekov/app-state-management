@@ -4,7 +4,10 @@ import { RootState } from '../../store/store';
 import { useEffect, useState } from 'react';
 import { useGetPokemonByNameQuery } from '../../APISlice/ApiSlice';
 import Loader from '../Loader/Loader';
-import { addCheckedPokemon } from '../../store/chekedPokemons';
+import {
+    addCheckedPokemon,
+    removeCheckedPokemon,
+} from '../../store/chekedPokemons';
 
 export default function Pokemon() {
     const storeData = useSelector((state: RootState) => state.data);
@@ -27,7 +30,15 @@ export default function Pokemon() {
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const pokemonName = event.target.labels?.[0].innerText;
-        dispatch(addCheckedPokemon(pokemonName));
+        const isPokemonChecked = event.target.checked;
+
+        if (isPokemonChecked) {
+            dispatch(addCheckedPokemon(pokemonName));
+
+            return;
+        }
+
+        dispatch(removeCheckedPokemon(pokemonName));
     };
 
     return (
