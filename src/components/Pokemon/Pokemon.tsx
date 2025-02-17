@@ -8,6 +8,7 @@ import {
     addCheckedPokemon,
     removeCheckedPokemon,
 } from '../../store/chekedPokemons';
+import ModalSelectedPokemon from '../ModalSelectedPokemon/ModalSelectedPokemon';
 
 export default function Pokemon() {
     const storeData = useSelector((state: RootState) => state.data);
@@ -68,6 +69,7 @@ export default function Pokemon() {
                             />
                         </label>
                     ))}
+                    <ModalSelectedPokemon />
                 </div>
             )}
         </div>
