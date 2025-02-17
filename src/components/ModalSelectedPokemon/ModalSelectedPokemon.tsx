@@ -3,6 +3,7 @@ import './ModalSelectedPokemon.css';
 import { RootState } from '../../store/store';
 import { cleanCheckedPokemons } from '../../store/chekedPokemons';
 import { createPortal } from 'react-dom';
+import { useRef } from 'react';
 
 export default function ModalSelectedPokemon() {
     const checkedPokemons = useSelector(
@@ -11,13 +12,19 @@ export default function ModalSelectedPokemon() {
     const howManyChecked = checkedPokemons.length;
     const dispatch = useDispatch();
     const unselectCheckedPokemons = () => dispatch(cleanCheckedPokemons());
+    const linkRef = useRef<HTMLAnchorElement | null>(null);
 
     const downloadFile = () => {
         const csvFileBody = checkedPokemons.reduce(
             (acc, pokemon) => `${acc}${pokemon.name}\r\n`,
             'data:text/csv;charset=utf-8,'
         );
-        window.location.href = encodeURI(csvFileBody);
+        const linkElement = linkRef.current;
+
+        if (linkElement) {
+            linkElement.href = encodeURI(csvFileBody);
+            linkElement.download = `${howManyChecked}_pokemons.csv`;
+        }
     };
 
     return (
@@ -37,13 +44,13 @@ export default function ModalSelectedPokemon() {
                 >
                     Unselect all
                 </button>
-                <button
-                    type="button"
+                <a
+                    ref={linkRef}
                     className="button modal__button--download"
                     onClick={downloadFile}
                 >
                     Download
-                </button>
+                </a>
             </div>,
             document.body
         )

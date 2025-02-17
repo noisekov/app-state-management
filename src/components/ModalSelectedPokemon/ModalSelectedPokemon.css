@@ -22,11 +22,14 @@
 .modal__button--unselect {
     grid-column: 1/ 2;
     grid-row: 2 / 2;
+    color: var(--text-color);
 }
 
 .modal__button--download {
     grid-column: 2/ 2;
     grid-row: 2 / 2;
+    text-align: center;
+    color: var(--text-color);
 }
 
 @keyframes animationAppear {
