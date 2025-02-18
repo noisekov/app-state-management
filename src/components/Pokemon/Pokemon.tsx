@@ -2,7 +2,10 @@ import './Pokemon.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useEffect, useState } from 'react';
-import { useGetPokemonByNameQuery } from '../../APISlice/ApiSlice';
+import {
+    useGetPokemonByNameQuery,
+    useGetPokemonDataQuery,
+} from '../../APISlice/ApiSlice';
 import Loader from '../Loader/Loader';
 import {
     addCheckedPokemon,
@@ -44,9 +47,38 @@ export default function Pokemon() {
     };
 
     const [showModal, setShowModal] = useState(false);
+    const [pokemonName, setPokemonName] = useState('');
     const toggleModal = () => {
         setShowModal(!showModal);
     };
+
+    const getInfoForModal = (name: string) => {
+        setPokemonName(name);
+    };
+
+    const { data: pokemonData, isSuccess } =
+        useGetPokemonDataQuery(pokemonName);
+    const [dataForModal, setDataForModal] = useState({
+        img: '',
+        height: 0,
+        name: '',
+        weight: 0,
+        types: [''],
+    });
+
+    useEffect(() => {
+        if (isSuccess) {
+            const { img, height, name, weight, types } = pokemonData;
+
+            setDataForModal({
+                height,
+                img,
+                name,
+                weight,
+                types,
+            });
+        }
+    }, [pokemonData, isSuccess]);
 
     return (
         <div className="pokemon">
@@ -58,7 +90,13 @@ export default function Pokemon() {
                 <div className="pokemon-cards">
                     <div className="pokemon-card">
                         {foundedPokemonFromSearch}
-                        <button className="button" onClick={toggleModal}>
+                        <button
+                            className="button"
+                            onClick={() => {
+                                toggleModal();
+                                getInfoForModal(foundedPokemonFromSearch);
+                            }}
+                        >
                             Info
                         </button>
                     </div>
@@ -78,7 +116,13 @@ export default function Pokemon() {
                                     )}
                                 />
                             </label>
-                            <button className="button" onClick={toggleModal}>
+                            <button
+                                className="button"
+                                onClick={() => {
+                                    toggleModal();
+                                    getInfoForModal(pokemon.name);
+                                }}
+                            >
                                 Info
                             </button>
                         </div>
@@ -86,7 +130,12 @@ export default function Pokemon() {
                     <ModalSelectedPokemon />
                 </div>
             )}
-            {showModal && <AdditionalInfo toggleModal={toggleModal} />}
+            {showModal && (
+                <AdditionalInfo
+                    toggleModal={toggleModal}
+                    dataForModal={dataForModal}
+                />
+            )}
         </div>
     );
 }
