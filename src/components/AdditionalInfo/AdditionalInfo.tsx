@@ -8,7 +8,7 @@ type Props = {
 export default function AdditionalInfo({ toggleModal }: Props) {
     return createPortal(
         <div
-            className="additional-info"
+            className="additional-info modal"
             onClick={(event) => {
                 if (event.target === event.currentTarget) {
                     toggleModal();
