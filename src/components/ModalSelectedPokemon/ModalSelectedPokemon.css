@@ -36,10 +36,10 @@
     0% {
         transform: translateY(-50px);
     }
-    50% {
+    33% {
         transform: translateY(0);
     }
-    75% {
+    66% {
         transform: translateY(-10px);
     }
     100% {
