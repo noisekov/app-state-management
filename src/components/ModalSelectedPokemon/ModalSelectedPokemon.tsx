@@ -39,14 +39,14 @@ export default function ModalSelectedPokemon() {
                 </span>
                 <button
                     type="button"
-                    className="button modal__button--unselect"
+                    className="button modal__button-unselect"
                     onClick={() => unselectCheckedPokemons()}
                 >
                     Unselect all
                 </button>
                 <a
                     ref={linkRef}
-                    className="button modal__button--download"
+                    className="button modal__button-download"
                     onClick={downloadFile}
                 >
                     Download
