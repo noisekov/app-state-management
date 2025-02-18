@@ -4,11 +4,13 @@ export default defineConfig({
     test: {
         exclude: [...configDefaults.exclude, 'packages/template/*'],
         environment: 'jsdom',
+        globals: true,
         coverage: {
             include: ['**/*.tsx'],
             exclude: [
                 '**/node_modules/**',
-                '**/*.test.tsx',
+                './*',
+                // '**/*.test.tsx',
                 '**/*.spec.tsx',
                 'src/__tests__/setup.ts',
             ],
