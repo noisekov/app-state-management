@@ -3,9 +3,9 @@
     border-radius: 15px;
     padding: 10px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
+    align-items: stretch;
     min-width: 150px;
     transition: all 0.1s ease;
     gap: 5px;
@@ -14,6 +14,14 @@
         background-color: var(--text-color);
         color: var(--bg-color);
     }
+}
+
+.pokemon-card__wrapper {
+    display: flex;
+    align-self: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
 }
 
 .pokemon {

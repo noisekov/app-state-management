@@ -56,25 +56,32 @@ export default function Pokemon() {
                 <>Incorrect Input Value</>
             ) : foundedPokemonFromSearch ? (
                 <div className="pokemon-cards">
-                    <div className="pokemon-card" onClick={toggleModal}>
+                    <div className="pokemon-card">
                         {foundedPokemonFromSearch}
+                        <button className="button" onClick={toggleModal}>
+                            Info
+                        </button>
                     </div>
                 </div>
             ) : (
                 <div className="pokemon-cards grid">
                     {storeData.map((pokemon) => (
-                        <label className="pokemon-card" key={pokemon.name}>
-                            {pokemon.name}
-                            <input
-                                className="pokemon-input"
-                                type="checkbox"
-                                onChange={(event) => saveChekedCard(event)}
-                                checked={checkedPokemons.some(
-                                    (item) => item.name === pokemon.name
-                                )}
-                                onClick={toggleModal}
-                            />
-                        </label>
+                        <div className="pokemon-card" key={pokemon.name}>
+                            <label className="pokemon-card__wrapper">
+                                {pokemon.name}
+                                <input
+                                    className="pokemon-input"
+                                    type="checkbox"
+                                    onChange={(event) => saveChekedCard(event)}
+                                    checked={checkedPokemons.some(
+                                        (item) => item.name === pokemon.name
+                                    )}
+                                />
+                            </label>
+                            <button className="button" onClick={toggleModal}>
+                                Info
+                            </button>
+                        </div>
                     ))}
                     <ModalSelectedPokemon />
                 </div>
