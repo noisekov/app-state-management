@@ -24,8 +24,11 @@ export default function Pokemon() {
         setSerchQuery(search);
     }, [search]);
 
-    const { data, isError, isFetching } = useGetPokemonByNameQuery(searchQuery);
-    const { name: foundedPokemonFromSearch } = { ...data };
+    const {
+        data: foundedPokemonNameFromSearch,
+        isError,
+        isFetching,
+    } = useGetPokemonByNameQuery(searchQuery);
 
     const checkedPokemons = useSelector(
         (state: RootState) => state.checkedPokemons
@@ -86,15 +89,15 @@ export default function Pokemon() {
                 <Loader />
             ) : isError ? (
                 <>Incorrect Input Value</>
-            ) : foundedPokemonFromSearch ? (
+            ) : foundedPokemonNameFromSearch ? (
                 <div className="pokemon-cards">
                     <div className="pokemon-card">
-                        {foundedPokemonFromSearch}
+                        {foundedPokemonNameFromSearch}
                         <button
                             className="button"
                             onClick={() => {
                                 toggleModal();
-                                getInfoForModal(foundedPokemonFromSearch);
+                                getInfoForModal(foundedPokemonNameFromSearch);
                             }}
                         >
                             Info

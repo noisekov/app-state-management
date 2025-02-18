@@ -14,6 +14,8 @@ export const pokemonApi = createApi({
     endpoints: (builder) => ({
         getPokemonByName: builder.query({
             query: (name) => `pokemon/${name}`,
+            transformResponse: (response: PokemonResponse) =>
+                response.name ?? '',
         }),
         listPosts: builder.query({
             query: (page) => `pokemon/?limit=20&offset=${page}`,
