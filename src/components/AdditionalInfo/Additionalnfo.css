@@ -59,5 +59,7 @@
 }
 
 .additional-info__modal-img {
+    width: 200px;
+    height: 200px;
     filter: drop-shadow(3px 4px 12px var(--bg-filter));
 }

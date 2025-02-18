@@ -26,7 +26,7 @@ export const pokemonApi = createApi({
                 const name = response.name ?? '';
                 const weight = response.weight ?? 0;
                 const types = response.types ?? [];
-                const typesArr = types.map(({ type }) => type.name);
+                const typesArr = types.map(({ type: { name } }) => name);
 
                 return {
                     img: front_default,
