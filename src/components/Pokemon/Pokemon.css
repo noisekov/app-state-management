@@ -9,10 +9,12 @@
     min-width: 150px;
     transition: all 0.1s ease;
     gap: 5px;
-
     &:hover {
         background-color: var(--text-color);
         color: var(--bg-color);
+    }
+    &:has(.pokemon-input:checked) {
+        box-shadow: 0 0px 6px 3px var(--bg-btn--active);
     }
 }
 
