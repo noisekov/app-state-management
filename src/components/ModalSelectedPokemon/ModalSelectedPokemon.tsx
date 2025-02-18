@@ -16,8 +16,8 @@ export default function ModalSelectedPokemon() {
 
     const downloadFile = () => {
         const csvFileBody = checkedPokemons.reduce(
-            (acc, pokemon) => `${acc}${pokemon.name}\r\n`,
-            'data:text/csv;charset=utf-8,'
+            (acc, pokemon) => `${acc}${pokemon.name}\n`,
+            'data:text/csv;charset=utf-8,name\n'
         );
         const linkElement = linkRef.current;
 
