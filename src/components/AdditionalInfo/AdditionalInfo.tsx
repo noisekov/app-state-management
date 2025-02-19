@@ -40,6 +40,7 @@ export default function AdditionalInfo({ toggleModal, dataForModal }: Props) {
                 <Button
                     type="button"
                     className="additional-info__modal-close"
+                    dataTestid="additional-info__modal-close"
                     onClick={() => toggleModal()}
                     text=""
                 />
