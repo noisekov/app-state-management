@@ -10,7 +10,6 @@ export default defineConfig({
             exclude: [
                 '**/node_modules/**',
                 './*',
-                // '**/*.test.tsx',
                 '**/*.spec.tsx',
                 'src/__tests__/setup.ts',
             ],
