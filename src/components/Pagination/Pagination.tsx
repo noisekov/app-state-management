@@ -5,6 +5,7 @@ import { decrement, increment } from '../../store/pageReducer';
 import { useListPostsQuery } from '../../APISlice/ApiSlice';
 import { addData } from '../../store/dataReducer';
 import { RootState } from '../../store/store';
+import Button from '../Button/Button';
 
 export default function Pagination() {
     const POKEMONS_IN_LIST = 20;
@@ -36,23 +37,19 @@ export default function Pagination() {
 
     return hasSearch ? null : (
         <div className="pagination">
-            <button
+            <Button
+                type="button"
                 className={'pagination-btn' + (page === 1 ? ' disabled' : '')}
-                onClick={() => {
-                    handleClickMinus();
-                }}
-            >
-                {'<'}
-            </button>
+                onClick={() => handleClickMinus()}
+                text="<"
+            />
             <span>{page}</span>
-            <button
+            <Button
+                type="button"
                 className="pagination-btn"
-                onClick={() => {
-                    handleClickPlus();
-                }}
-            >
-                {'>'}
-            </button>
+                onClick={() => handleClickPlus()}
+                text=">"
+            />
         </div>
     );
 }

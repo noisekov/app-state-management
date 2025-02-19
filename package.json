@@ -10,9 +10,8 @@
         "preview": "vite preview",
         "prepare": "husky",
         "format:fix": "prettier . --write",
-        "test": "vitest",
+        "test": "vitest run --coverage",
         "test:ui": "vitest --ui",
-        "test:coverage": "vitest run --coverage",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },

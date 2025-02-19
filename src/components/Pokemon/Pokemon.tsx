@@ -13,6 +13,7 @@ import {
 } from '../../store/chekedPokemons';
 import ModalSelectedPokemon from '../ModalSelectedPokemon/ModalSelectedPokemon';
 import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
+import Button from '../Button/Button';
 
 export default function Pokemon() {
     const storeData = useSelector((state: RootState) => state.data);
@@ -93,15 +94,15 @@ export default function Pokemon() {
                 <div className="pokemon-cards">
                     <div className="pokemon-card">
                         {foundedPokemonNameFromSearch}
-                        <button
+                        <Button
+                            type="button"
                             className="button"
                             onClick={() => {
                                 toggleModal();
                                 getInfoForModal(foundedPokemonNameFromSearch);
                             }}
-                        >
-                            Info
-                        </button>
+                            text="Info"
+                        />
                     </div>
                 </div>
             ) : (
@@ -119,15 +120,15 @@ export default function Pokemon() {
                                     )}
                                 />
                             </label>
-                            <button
+                            <Button
+                                type="button"
                                 className="button"
                                 onClick={() => {
                                     toggleModal();
                                     getInfoForModal(pokemon.name);
                                 }}
-                            >
-                                Info
-                            </button>
+                                text="Info"
+                            />
                         </div>
                     ))}
                     <ModalSelectedPokemon />

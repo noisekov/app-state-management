@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
 import './Search.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
-
 import { addSearch, cleanSearch } from '../../store/searchReducer';
+import Button from '../Button/Button';
 
 export default function Search() {
     const [query, setQuery] = useState('');
@@ -44,9 +44,7 @@ export default function Search() {
                 className="input-search"
                 placeholder="For example Pikachu"
             />
-            <button className="button" type="submit">
-                Search
-            </button>
+            <Button text="Search" type="submit" className="button" />
         </form>
     );
 }

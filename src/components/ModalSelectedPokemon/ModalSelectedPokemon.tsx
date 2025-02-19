@@ -4,6 +4,7 @@ import { RootState } from '../../store/store';
 import { cleanCheckedPokemons } from '../../store/chekedPokemons';
 import { createPortal } from 'react-dom';
 import { useRef } from 'react';
+import Button from '../Button/Button';
 
 export default function ModalSelectedPokemon() {
     const checkedPokemons = useSelector(
@@ -37,13 +38,12 @@ export default function ModalSelectedPokemon() {
                         : `${howManyChecked} item is `}
                     selected
                 </span>
-                <button
+                <Button
                     type="button"
                     className="button modal__button-unselect"
                     onClick={() => unselectCheckedPokemons()}
-                >
-                    Unselect all
-                </button>
+                    text="Unselect all"
+                />
                 <a
                     ref={linkRef}
                     className="button modal__button-download"

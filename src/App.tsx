@@ -3,6 +3,7 @@ import Search from './components/Search/Search';
 import Pokemon from './components/Pokemon/Pokemon';
 import Pagination from './components/Pagination/Pagination';
 import { useTheme } from './hooks/UseTheme';
+import Button from './components/Button/Button';
 
 export default function App() {
     const { toggleTheme, darkMode } = useTheme();
@@ -18,9 +19,12 @@ export default function App() {
                     <Pagination />
                 </div>
             </div>
-            <button className="button button--theme" onClick={toggleTheme}>
-                {darkMode ? 'Theme light' : 'Theme dark'}
-            </button>
+            <Button
+                type="button"
+                className="button button--theme"
+                onClick={toggleTheme}
+                text={darkMode ? 'Theme light' : 'Theme dark'}
+            />
         </>
     );
 }
