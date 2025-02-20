@@ -1,141 +1,145 @@
-import { useNavigate } from 'react-router';
-import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
 import './Pokemon.css';
-import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { useEffect, useState } from 'react';
+import {
+    useGetPokemonByNameQuery,
+    useGetPokemonDataQuery,
+} from '../../APISlice/ApiSlice';
+import Loader from '../Loader/Loader';
+import {
+    addCheckedPokemon,
+    removeCheckedPokemon,
+} from '../../store/chekedPokemons';
+import ModalSelectedPokemon from '../ModalSelectedPokemon/ModalSelectedPokemon';
+import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
+import Button from '../Button/Button';
 
-interface requestDataI {
-    name: string;
-    abilities: string[];
-    sprites: string;
-    next: string;
-    previous: string;
-    url: string[];
-    isInputEmpty: boolean;
-}
-
-interface PokemonProps {
-    onInputData: requestDataI;
-    handleCurrentPage: number;
-}
-
-interface setAdditionalInformationI {
-    weight: string;
-    height: string;
-    types: string[];
-}
-
-export default function Pokemon({
-    onInputData,
-    handleCurrentPage,
-}: PokemonProps) {
-    const [inputData, setInputData] = useState<requestDataI>({
-        name: '',
-        abilities: [],
-        sprites: '',
-        next: '',
-        previous: '',
-        url: [],
-        isInputEmpty: false,
-    });
-    const [currentPokemonIndex, setCurrentPokemonIndex] = useState(0);
-    const [additionalModalOpen, setAdditionalModalOpen] = useState(false);
-    const navigate = useNavigate();
-    const [additionalInformation, setAdditionalInformation] =
-        useState<setAdditionalInformationI>({
-            weight: '',
-            height: '',
-            types: [],
-        });
-
-    const previousOnInputData = useRef(onInputData);
-    useEffect(() => {
-        if (previousOnInputData.current !== onInputData) {
-            setInputData(onInputData);
-        }
-
-        setAdditionalInformation({
-            weight: '',
-            height: '',
-            types: [],
-        });
-        setAdditionalModalOpen(false);
-        setCurrentPokemonIndex(0);
-    }, [onInputData]);
+export default function Pokemon() {
+    const storeData = useSelector((state: RootState) => state.data);
+    const search = useSelector((state: RootState) => state.searchQuery);
+    const [searchQuery, setSerchQuery] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const MAX_PAGE_LOAD = 20;
-        setCurrentPokemonIndex(handleCurrentPage % MAX_PAGE_LOAD);
-    }, [handleCurrentPage]);
+        setSerchQuery(search);
+    }, [search]);
 
-    const closeAddiionalInformation = () => {
-        setAdditionalInformation({
-            weight: '',
-            height: '',
-            types: [],
-        });
-        setAdditionalModalOpen(false);
-        navigate(-1);
-    };
+    const {
+        data: foundedPokemonNameFromSearch,
+        isError,
+        isFetching,
+    } = useGetPokemonByNameQuery(searchQuery);
 
-    const { sprites, name, abilities, url } = inputData;
+    const checkedPokemons = useSelector(
+        (state: RootState) => state.checkedPokemons
+    );
 
-    const getPokemonInformation = async () => {
-        if (additionalModalOpen) {
-            setAdditionalInformation({
-                weight: '',
-                height: '',
-                types: [],
-            });
-            setAdditionalModalOpen(false);
-            navigate(-1);
+    const saveChekedCard = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const pokemonName = event.target.labels?.[0].innerText;
+        const isPokemonChecked = event.target.checked;
+
+        if (isPokemonChecked) {
+            dispatch(addCheckedPokemon(pokemonName));
 
             return;
         }
 
-        const request = await fetch(url[currentPokemonIndex]);
-        const { weight, height, types } = await request.json();
-        const typesOfPokemons = types.map(
-            (typesElements: { type: { name: string } }) =>
-                typesElements.type.name
-        );
-        setAdditionalInformation({ weight, height, types: typesOfPokemons });
-        setAdditionalModalOpen(true);
-        navigate(`?frontpage=${handleCurrentPage + 1}&details=1`);
+        dispatch(removeCheckedPokemon(pokemonName));
     };
+
+    const [showModal, setShowModal] = useState(false);
+    const [pokemonName, setPokemonName] = useState('');
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    };
+
+    const getInfoForModal = (name: string) => {
+        setPokemonName(name);
+    };
+
+    const { data: pokemonData, isSuccess } =
+        useGetPokemonDataQuery(pokemonName);
+    const [dataForModal, setDataForModal] = useState({
+        img: '',
+        height: 0,
+        name: '',
+        weight: 0,
+        types: [''],
+    });
+
+    useEffect(() => {
+        if (isSuccess) {
+            const { img, height, name, weight, types } = pokemonData;
+
+            setDataForModal({
+                height,
+                img,
+                name,
+                weight,
+                types,
+            });
+        }
+    }, [pokemonData, isSuccess]);
 
     return (
         <div className="pokemon">
-            <div className="pokemon-cards">
-                <div className="pokemon-card" onClick={getPokemonInformation}>
-                    <h1>{name ? 'Pokemon' : 'Incorrect input value'}</h1>
-                    {name && sprites && (
-                        <div className="pokemon-card__image">
-                            <img
-                                src={sprites}
-                                alt={name}
-                                width={150}
-                                height={150}
+            {isFetching ? (
+                <Loader />
+            ) : isError ? (
+                <>Incorrect Input Value</>
+            ) : foundedPokemonNameFromSearch ? (
+                <div className="pokemon-cards">
+                    <div className="pokemon-card">
+                        {foundedPokemonNameFromSearch}
+                        <Button
+                            type="button"
+                            className="button"
+                            onClick={() => {
+                                toggleModal();
+                                getInfoForModal(foundedPokemonNameFromSearch);
+                            }}
+                            text="Info"
+                        />
+                    </div>
+                </div>
+            ) : (
+                <div className="pokemon-cards grid">
+                    {storeData.map((pokemon) => (
+                        <div className="pokemon-card" key={pokemon.name}>
+                            <label className="pokemon-card__wrapper">
+                                {pokemon.name}
+                                <input
+                                    className="pokemon-input"
+                                    type="checkbox"
+                                    onChange={(event) => saveChekedCard(event)}
+                                    checked={checkedPokemons.some(
+                                        (item) => item.name === pokemon.name
+                                    )}
+                                />
+                            </label>
+                            <Button
+                                type="button"
+                                className="button"
+                                onClick={() => {
+                                    toggleModal();
+                                    getInfoForModal(pokemon.name);
+                                }}
+                                text="Info"
                             />
                         </div>
-                    )}
-                    {!!name && (
-                        <p className="pokemon-card__text">
-                            {name ? `name: ${name}` : ''}
-                        </p>
-                    )}
-                    {!!abilities.length && (
-                        <p className="pokemon-card__text">
-                            abilities: {abilities.join(', ')}
-                        </p>
-                    )}
+                    ))}
+                    <ModalSelectedPokemon />
                 </div>
-                {additionalModalOpen && (
-                    <AdditionalInfo
-                        closeAddiionalInformation={closeAddiionalInformation}
-                        additionalInformation={additionalInformation}
-                    />
-                )}
-            </div>
+            )}
+            {showModal && (
+                <AdditionalInfo
+                    toggleModal={toggleModal}
+                    dataForModal={dataForModal}
+                />
+            )}
         </div>
     );
 }

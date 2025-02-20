@@ -1,0 +1,48 @@
+.modal-wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background-color: var(--bg-input);
+    margin: 0 15px 15px 0;
+    border-radius: 20px;
+    animation: animationAppear 0.5s linear;
+}
+
+.modal_text {
+    font-size: 20px;
+    grid-column: span 2;
+    grid-row: 1 /2;
+}
+
+.modal__button-unselect {
+    grid-column: 1/ 2;
+    grid-row: 2 / 2;
+    color: var(--text-color);
+}
+
+.modal__button-download {
+    grid-column: 2/ 2;
+    grid-row: 2 / 2;
+    text-align: center;
+    color: var(--text-color);
+}
+
+@keyframes animationAppear {
+    0% {
+        transform: translateY(-50px);
+    }
+    33% {
+        transform: translateY(0);
+    }
+    66% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

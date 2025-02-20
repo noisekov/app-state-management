@@ -1,21 +1,4 @@
-#root:has(.spinner-box) {
-    overflow: hidden;
-}
-
-.spinner-box {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-}
-
 .pulse-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 120px;
     display: flex;
     justify-content: space-between;
@@ -26,7 +9,7 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #3ff9dc;
+    background-color: var(--text-color);
 }
 
 .pulse-bubble-1 {

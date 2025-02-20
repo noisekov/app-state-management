@@ -1,103 +1,26 @@
-import { useNavigate } from 'react-router';
-import Loader from '../Loader/Loader';
+import { useDispatch } from 'react-redux';
 import './Search.css';
-import React, { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import { addSearch, cleanSearch } from '../../store/searchReducer';
+import Button from '../Button/Button';
 
-interface requestDataI {
-    name: string;
-    abilities: string[];
-    sprites: string;
-    next: string;
-    previous: string;
-    url: string[];
-    isInputEmpty: boolean;
-}
-
-interface PokemonData {
-    name: string;
-    sprites: { front_default: string };
-    abilities: { ability: { name: string } }[];
-}
-
-interface SearchProps {
-    onInputData: (data: requestDataI) => void;
-    setFirstPage: () => void;
-}
-
-export default function Search({ onInputData, setFirstPage }: SearchProps) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [querySearch, setQuerySearch] = useState('');
-    const navigate = useNavigate();
+export default function Search() {
+    const [query, setQuery] = useState('');
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const storedData: string | null = localStorage.getItem('data') || '';
-        setQuerySearch(storedData);
-        request(storedData);
-    }, []);
+        const storedData: string = localStorage.getItem('data') || '';
+        setQuery(storedData);
+        dispatch(addSearch(storedData));
+    }, [dispatch]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setQuerySearch(event.target.value);
-    };
+        setQuery(event.target.value);
 
-    const request = async (value: string) => {
-        const resultObj: requestDataI = {
-            name: '',
-            abilities: [],
-            sprites: '',
-            next: '',
-            previous: '',
-            url: [],
-            isInputEmpty: true,
-        };
-        setIsLoading(true);
-        const request = await fetch(
-            `https://pokeapi.co/api/v2/pokemon/${value}`
-        );
-        const { status } = await request;
-
-        if (status !== 200) {
-            setIsLoading(false);
-            onInputData(resultObj);
+        if (event.target.value === '') {
+            localStorage.setItem('data', event.target.value);
+            dispatch(cleanSearch());
         }
-
-        const data = await request.json();
-
-        if (value) {
-            parseObj(data, false);
-        } else {
-            resultObj.url = data.results.map(
-                (result: { url: string }) => result.url
-            );
-            resultObj.previous = data.previous;
-            resultObj.next = data.next;
-
-            const requestOnePokemonInList = await fetch(data.results[0].url);
-            const { status: statusOnePokemonOnList } =
-                await requestOnePokemonInList;
-
-            if (statusOnePokemonOnList !== 200) {
-                onInputData(resultObj);
-            }
-
-            const dataOnePokemonInList = await requestOnePokemonInList.json();
-
-            navigate(`/search/1`);
-            parseObj(dataOnePokemonInList, true);
-        }
-
-        function parseObj(data: PokemonData, isInputEmpty: boolean) {
-            resultObj.name = data.name;
-            resultObj.sprites = data.sprites.front_default;
-            data.abilities.forEach((ability: { ability: { name: string } }) => {
-                resultObj.abilities.push(ability.ability.name);
-            });
-            resultObj.url.push(`https://pokeapi.co/api/v2/pokemon/${value}`);
-            resultObj.isInputEmpty = isInputEmpty;
-        }
-
-        setIsLoading(false);
-        onInputData(resultObj);
-        setFirstPage();
     };
 
     const handleSubmit = async (
@@ -109,22 +32,19 @@ export default function Search({ onInputData, setFirstPage }: SearchProps) {
         ).value.trim();
 
         localStorage.setItem('data', inputValue);
-        request(inputValue);
+        dispatch(addSearch(inputValue));
     };
 
-    return isLoading ? (
-        <Loader />
-    ) : (
-        <form onSubmit={handleSubmit}>
+    return (
+        <form className="form-search" onSubmit={handleSubmit}>
             <input
-                value={querySearch}
+                value={query}
                 onChange={handleChange}
                 type="search"
                 className="input-search"
+                placeholder="For example Pikachu"
             />
-            <button className="button" type="submit">
-                Search
-            </button>
+            <Button text="Search" type="submit" className="button" />
         </form>
     );
 }

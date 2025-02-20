@@ -1,25 +1,51 @@
-interface setAdditionalInformationI {
-    weight: string;
-    height: string;
-    types: string[];
-}
+import { createPortal } from 'react-dom';
+import './Additionalnfo.css';
+import Button from '../Button/Button';
 
-export default function AdditionalInfo({
-    additionalInformation,
-    closeAddiionalInformation,
-}: {
-    additionalInformation: setAdditionalInformationI;
-    closeAddiionalInformation: () => void;
-}) {
-    return (
-        <div className="pokemon-card pokemon-card__additional">
-            <div>weight: {additionalInformation.weight}</div>
-            <div>height: {additionalInformation.height}</div>
-            <div>types: {additionalInformation.types.join()}</div>
-            <span
-                className="pokemon-card__additional--close"
-                onClick={closeAddiionalInformation}
-            ></span>
-        </div>
+type Props = {
+    toggleModal: () => void;
+    dataForModal: {
+        img: string;
+        height: number;
+        name: string;
+        weight: number;
+        types: string[];
+    };
+};
+
+export default function AdditionalInfo({ toggleModal, dataForModal }: Props) {
+    const { img, height, name, weight, types } = dataForModal;
+
+    return createPortal(
+        <div
+            className="additional-info modal"
+            onClick={(event) => {
+                if (event.target === event.currentTarget) {
+                    toggleModal();
+                }
+            }}
+        >
+            <div className="additional-info__modal">
+                <img
+                    className="additional-info__modal-img"
+                    src={img}
+                    alt={'pokemon ' + name}
+                    width="100%"
+                    height="100%"
+                />
+                <span>name: {name}</span>
+                <span>weight: {weight}</span>
+                <span>height: {height}</span>
+                <span>types: {types.join(', ')} </span>
+                <Button
+                    type="button"
+                    className="additional-info__modal-close"
+                    dataTestid="additional-info__modal-close"
+                    onClick={() => toggleModal()}
+                    text=""
+                />
+            </div>
+        </div>,
+        document.body
     );
 }
