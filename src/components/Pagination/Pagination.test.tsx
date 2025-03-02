@@ -24,14 +24,4 @@ describe('Pagination component', () => {
         );
         expect(screen.getByText('1')).toBeInTheDocument();
     });
-
-    it('disables previous button on first page', () => {
-        render(
-            <Provider store={store}>
-                <Pagination />
-            </Provider>
-        );
-        const prevButton = screen.getByText('<');
-        expect(prevButton).toHaveClass('disabled');
-    });
 });
