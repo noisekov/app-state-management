@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './Pagination.css';
+import styles from './Pagination.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../../store/pageReducer';
 import { useListPostsQuery } from '../../APISlice/ApiSlice';
@@ -36,17 +36,17 @@ export default function Pagination() {
     };
 
     return hasSearch ? null : (
-        <div className="pagination">
+        <div className={styles.pagination}>
             <Button
                 type="button"
-                className={'pagination-btn' + (page === 1 ? ' disabled' : '')}
+                className={`${styles['pagination-btn']} ${page === 1 ? ` ${styles.disabled}` : ''}`}
                 onClick={() => handleClickMinus()}
                 text="<"
             />
             <span>{page}</span>
             <Button
                 type="button"
-                className="pagination-btn"
+                className={styles['pagination-btn']}
                 onClick={() => handleClickPlus()}
                 text=">"
             />
