@@ -6,6 +6,7 @@ export default defineConfig({
         environment: 'jsdom',
         globals: true,
         coverage: {
+            provider: 'v8',
             include: ['**/*.tsx'],
             exclude: [
                 '**/node_modules/**',
