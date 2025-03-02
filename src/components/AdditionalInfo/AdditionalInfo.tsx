@@ -18,7 +18,7 @@ export default function AdditionalInfo({ toggleModal, dataForModal }: Props) {
 
     return createPortal(
         <div
-            className={`${styles['additional-info']} ${styles.modal}`}
+            className={`${styles['additional-info']} modal`}
             onClick={(event) => {
                 if (event.target === event.currentTarget) {
                     toggleModal();

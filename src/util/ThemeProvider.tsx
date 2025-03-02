@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ThemeContext } from '../hooks/UseTheme.tsx';
+import { ThemeContext } from '../hooks/UseTheme';
 
 interface ThemeContextProps {
     children: React.ReactNode;
