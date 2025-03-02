@@ -8,13 +8,9 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "preview": "vite preview",
         "prepare": "husky",
         "format:fix": "prettier . --write",
-        "test": "vitest run --coverage",
-        "test:ui": "vitest --ui",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d dist"
+        "test": "vitest run --coverage"
     },
     "lint-staged": {
         "**/*": "prettier --write --ignore-unknown"

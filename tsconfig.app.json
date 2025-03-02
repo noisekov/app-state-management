@@ -19,5 +19,5 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "pages/index.tsx"]
+    "include": ["src", "pages/index.tsx", "pages/404.tsx"]
 }
