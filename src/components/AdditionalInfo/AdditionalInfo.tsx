@@ -2,6 +2,7 @@
 import { createPortal } from 'react-dom';
 import styles from './Additionalnfo.module.css';
 import Button from '../Button/Button';
+import Image from 'next/image';
 
 type Props = {
     toggleModal: () => void;
@@ -27,12 +28,12 @@ export default function AdditionalInfo({ toggleModal, dataForModal }: Props) {
             }}
         >
             <div className={styles['additional-info__modal']}>
-                <img
+                <Image
                     className={styles['additional-info__modal-img']}
                     src={img}
                     alt={'pokemon ' + name}
-                    width="100%"
-                    height="100%"
+                    width={100}
+                    height={100}
                 />
                 <span>name: {name}</span>
                 <span>weight: {weight}</span>
