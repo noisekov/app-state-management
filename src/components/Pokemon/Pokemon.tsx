@@ -1,3 +1,4 @@
+'use client';
 import styles from './Pokemon.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';

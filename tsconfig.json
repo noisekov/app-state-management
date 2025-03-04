@@ -23,8 +23,20 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "noEmit": true
+        "noEmit": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "strictNullChecks": true
     },
-    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/globals.d.ts"],
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "next-env.d.ts",
+        "src/globals.d.ts",
+        "./dist/types/**/*.ts"
+    ],
     "exclude": ["node_modules"]
 }

@@ -1,3 +1,4 @@
+'use client';
 import { createPortal } from 'react-dom';
 import styles from './Additionalnfo.module.css';
 import Button from '../Button/Button';

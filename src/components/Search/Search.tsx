@@ -1,3 +1,4 @@
+'use client';
 import styles from './Search.module.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { addSearch, cleanSearch } from '../../store/searchReducer';

@@ -1,14 +1,14 @@
-import Search from '../src/components/Search/Search';
-import Pokemon from '../src/components/Pokemon/Pokemon';
-import Pagination from '../src/components/Pagination/Pagination';
-import { useTheme } from '../src/hooks/UseTheme';
-import Button from '../src/components/Button/Button';
+import Button from './components/Button/Button';
+import Pagination from './components/Pagination/Pagination';
+import Pokemon from './components/Pokemon/Pokemon';
+import Search from './components/Search/Search';
+import { useTheme } from './hooks/UseTheme';
 
 export default function App() {
     const { toggleTheme, darkMode } = useTheme();
 
     return (
-        <>
+        <div className="container">
             <div className="page">
                 <div className="top">
                     <Search />
@@ -24,6 +24,6 @@ export default function App() {
                 onClick={toggleTheme}
                 text={darkMode ? 'Theme light' : 'Theme dark'}
             />
-        </>
+        </div>
     );
 }

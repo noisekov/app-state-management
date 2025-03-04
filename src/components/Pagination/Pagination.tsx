@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 import styles from './Pagination.module.css';
 import { useDispatch, useSelector } from 'react-redux';
