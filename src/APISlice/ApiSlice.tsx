@@ -23,7 +23,9 @@ export const pokemonApi = createApi({
         getPokemonData: builder.query({
             query: (name) => `pokemon/${name}`,
             transformResponse: (response: PokemonResponse) => {
-                const img = response.sprites?.front_default ?? '';
+                const img =
+                    response.sprites?.front_default ??
+                    'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
                 const height = response.height ?? 0;
                 const name = response.name ?? '';
                 const weight = response.weight ?? 0;
