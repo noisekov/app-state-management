@@ -1,10 +1,4 @@
 'use client';
-import Search from '../src/components/Search/Search';
-import Pokemon from '../src/components/Pokemon/Pokemon';
-import Pagination from '../src/components/Pagination/Pagination';
-import { useTheme } from '../src/hooks/UseTheme';
-import Button from '../src/components/Button/Button';
-
 import React from 'react';
 import ErrorBoundary from '../src/components/ErrorBoundary/ErrorBoundary';
 import { Provider } from 'react-redux';
