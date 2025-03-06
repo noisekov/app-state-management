@@ -1,8 +1,8 @@
 import Search from '../src/components/Search/Search';
 import Pokemon from '../src/components/Pokemon/Pokemon';
-import Pagination from '../src/components/Pagination/Pagination';
 import { useTheme } from '../src/hooks/UseTheme';
 import Button from '../src/components/Button/Button';
+import Pagination from './pagination/[pagination]';
 
 export default function App() {
     const { toggleTheme, darkMode } = useTheme();
