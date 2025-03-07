@@ -7,7 +7,7 @@ import { useListPostsQuery } from '../../src/APISlice/ApiSlice';
 import { addData } from '../../src/store/dataReducer';
 import { RootState } from '../../src/store/store';
 import Button from '../../src/components/Button/Button';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 export default function Pagination() {
     const router = useRouter();

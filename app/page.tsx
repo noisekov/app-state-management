@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ErrorBoundary from '../src/components/ErrorBoundary/ErrorBoundary';
 import { Provider } from 'react-redux';
 import { store } from '../src/store/store';
@@ -12,7 +12,9 @@ export default function Page() {
             <ErrorBoundary>
                 <ThemeProvider>
                     <Provider store={store}>
-                        <App />
+                        <Suspense>
+                            <App />
+                        </Suspense>
                     </Provider>
                 </ThemeProvider>
             </ErrorBoundary>
