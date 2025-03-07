@@ -19,5 +19,10 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src", "pages/index.tsx", "pages/404.tsx"]
+    "include": [
+        "src",
+        "app/page.tsx",
+        "app/not-found.tsx",
+        "app/[pagintaion]/pagination.tsx"
+    ]
 }

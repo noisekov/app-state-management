@@ -21,9 +21,12 @@ export const pageSlice = createSlice({
         reset: (state) => {
             state.value = 1;
         },
+        set: (state, action) => {
+            state.value = action.payload;
+        },
     },
 });
 
-export const { increment, decrement, reset } = pageSlice.actions;
+export const { increment, decrement, reset, set } = pageSlice.actions;
 
 export default pageSlice.reducer;

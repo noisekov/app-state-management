@@ -1,5 +1,5 @@
 import Button from './components/Button/Button';
-import Pagination from './components/Pagination/Pagination';
+import Pagination from '../app/[pagintaion]/pagination';
 import Pokemon from './components/Pokemon/Pokemon';
 import Search from './components/Search/Search';
 import { useTheme } from './hooks/UseTheme';
