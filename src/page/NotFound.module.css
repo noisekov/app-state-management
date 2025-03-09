@@ -1,7 +1,11 @@
 .wrapper {
-    height: 100%;
+    height: 100vh;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+}
+
+body:has(.wrapper) {
+    display: block;
 }

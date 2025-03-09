@@ -9,7 +9,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     name="viewport"
                     content="width=device-width, initial-scale=1.0"
                 />
-                <title>My App</title>
+                <title>Pokemon</title>
                 <Meta />
                 <Links />
             </head>
