@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import './Additionalnfo.css';
+import styles from './Additionalnfo.module.css';
 import Button from '../Button/Button';
 
 type Props = {
@@ -18,16 +18,16 @@ export default function AdditionalInfo({ toggleModal, dataForModal }: Props) {
 
     return createPortal(
         <div
-            className="additional-info modal"
+            className={`${styles['additional-info']} modal`}
             onClick={(event) => {
                 if (event.target === event.currentTarget) {
                     toggleModal();
                 }
             }}
         >
-            <div className="additional-info__modal">
+            <div className={styles['additional-info__modal']}>
                 <img
-                    className="additional-info__modal-img"
+                    className={styles['additional-info__modal-img']}
                     src={img}
                     alt={'pokemon ' + name}
                     width="100%"
@@ -39,7 +39,7 @@ export default function AdditionalInfo({ toggleModal, dataForModal }: Props) {
                 <span>types: {types.join(', ')} </span>
                 <Button
                     type="button"
-                    className="additional-info__modal-close"
+                    className={styles['additional-info__modal-close']}
                     dataTestid="additional-info__modal-close"
                     onClick={() => toggleModal()}
                     text=""

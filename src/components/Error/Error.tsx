@@ -1,9 +1,9 @@
 import Button from '../Button/Button';
-import './Error.css';
+import styles from './Error.module.css';
 
 export default function Error() {
     return (
-        <div className="error">
+        <div className={styles.error}>
             <h1>Something went wrong</h1>
             <Button
                 type="button"

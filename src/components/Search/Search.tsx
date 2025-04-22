@@ -1,8 +1,8 @@
-import { useDispatch } from 'react-redux';
-import './Search.css';
+import styles from './Search.module.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { addSearch, cleanSearch } from '../../store/searchReducer';
 import Button from '../Button/Button';
+import { useDispatch } from 'react-redux';
 
 export default function Search() {
     const [query, setQuery] = useState('');
@@ -36,12 +36,12 @@ export default function Search() {
     };
 
     return (
-        <form className="form-search" onSubmit={handleSubmit}>
+        <form className={styles['form-search']} onSubmit={handleSubmit}>
             <input
                 value={query}
                 onChange={handleChange}
                 type="search"
-                className="input-search"
+                className={styles['input-search']}
                 placeholder="For example Pikachu"
             />
             <Button text="Search" type="submit" className="button" />

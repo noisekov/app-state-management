@@ -1,4 +1,4 @@
-import './Pokemon.css';
+import styles from './Pokemon.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useEffect, useState } from 'react';
@@ -85,14 +85,14 @@ export default function Pokemon() {
     }, [pokemonData, isSuccess]);
 
     return (
-        <div className="pokemon">
+        <div className={styles.pokemon}>
             {isFetching ? (
                 <Loader />
             ) : isError ? (
                 <>Incorrect Input Value</>
             ) : foundedPokemonNameFromSearch ? (
-                <div className="pokemon-cards">
-                    <div className="pokemon-card">
+                <div className={styles['pokemon-cards']}>
+                    <div className={styles['pokemon-card']}>
                         {foundedPokemonNameFromSearch}
                         <Button
                             type="button"
@@ -106,13 +106,16 @@ export default function Pokemon() {
                     </div>
                 </div>
             ) : (
-                <div className="pokemon-cards grid">
+                <div className={`${styles['pokemon-cards']} ${styles.grid}`}>
                     {storeData.map((pokemon) => (
-                        <div className="pokemon-card" key={pokemon.name}>
-                            <label className="pokemon-card__wrapper">
+                        <div
+                            className={styles['pokemon-card']}
+                            key={pokemon.name}
+                        >
+                            <label className={styles['pokemon-card__wrapper']}>
                                 {pokemon.name}
                                 <input
-                                    className="pokemon-input"
+                                    className={styles['pokemon-input']}
                                     type="checkbox"
                                     onChange={(event) => saveChekedCard(event)}
                                     checked={checkedPokemons.some(

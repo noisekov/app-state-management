@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import './ModalSelectedPokemon.css';
+import styles from './ModalSelectedPokemon.module.css';
 import { RootState } from '../../store/store';
 import { cleanCheckedPokemons } from '../../store/chekedPokemons';
 import { createPortal } from 'react-dom';
@@ -31,8 +31,8 @@ export default function ModalSelectedPokemon() {
     return (
         !!howManyChecked &&
         createPortal(
-            <div className="modal-wrapper">
-                <span className="modal_text">
+            <div className={styles['modal-wrapper']}>
+                <span className={styles['modal__text']}>
                     {howManyChecked > 1
                         ? `${howManyChecked} items are `
                         : `${howManyChecked} item is `}
@@ -40,13 +40,13 @@ export default function ModalSelectedPokemon() {
                 </span>
                 <Button
                     type="button"
-                    className="button modal__button-unselect"
+                    className={`button ${styles['modal__button-unselect']}`}
                     onClick={() => unselectCheckedPokemons()}
                     text="Unselect all"
                 />
                 <a
                     ref={linkRef}
-                    className="button modal__button-download"
+                    className={`button ${styles['modal__button-download']}`}
                     onClick={downloadFile}
                 >
                     Download
