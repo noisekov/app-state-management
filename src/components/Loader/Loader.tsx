@@ -1,15 +1,17 @@
-import './Loader.css';
+import style from './Loader.module.css';
 
 export default function Loader() {
     return (
-        <>
-            <div className="spinner-box">
-                <div className="pulse-container">
-                    <div className="pulse-bubble pulse-bubble-1"></div>
-                    <div className="pulse-bubble pulse-bubble-2"></div>
-                    <div className="pulse-bubble pulse-bubble-3"></div>
-                </div>
-            </div>
-        </>
+        <div className={style['pulse-container']} data-testid="pulse-container">
+            <div
+                className={`${style['pulse-bubble']} ${style['pulse-bubble-1']}`}
+            ></div>
+            <div
+                className={`${style['pulse-bubble']} ${style['pulse-bubble-2']}`}
+            ></div>
+            <div
+                className={`${style['pulse-bubble']} ${style['pulse-bubble-3']}`}
+            ></div>
+        </div>
     );
 }

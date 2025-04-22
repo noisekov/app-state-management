@@ -12,12 +12,17 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "moduleDetection": "force",
-        "noEmit": true,
+        "emitDeclarationOnly": true,
         "jsx": "react-jsx",
         "strict": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": ["src"]
+    "include": [
+        "src",
+        "pages/index.tsx",
+        "pages/404.tsx",
+        "pages/pagination/[pagination].tsx"
+    ]
 }

@@ -15,6 +15,7 @@
     height: 30px;
     border: none;
     cursor: pointer;
+    background-color: var(--bg-btn-pagination);
 }
 
 .pagination-btn.disabled {
